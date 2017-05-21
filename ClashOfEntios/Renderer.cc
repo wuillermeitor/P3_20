@@ -22,8 +22,8 @@ namespace enti
 			csbiInfo.srWindow.Right - csbiInfo.srWindow.Left + 1,
 			csbiInfo.srWindow.Bottom - csbiInfo.srWindow.Top + 1
 		}); // Disable vertical scrollbar
-		maxRows = csbiInfo.srWindow.Bottom;
-		maxCols = csbiInfo.srWindow.Right;
+		maxRows = csbiInfo.srWindow.Bottom - 5;
+		maxCols = csbiInfo.srWindow.Right - 5;
 		data = new CharInfo[maxRows*maxCols];
 	}
 

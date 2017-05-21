@@ -1,6 +1,7 @@
 #pragma once
 #include <fstream>
 #include <iostream>
+#include "Input.inl.hh"
 
 class Map {
 public:
@@ -15,5 +16,8 @@ private:
 };
 
 class Player {
-
+public:
+	Player();
+	void PlayerMovement();
+	~Player();
 };

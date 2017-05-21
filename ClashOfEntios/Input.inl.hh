@@ -9,12 +9,12 @@ namespace enti
 		NUM0 = 48, NUM1, NUM2, NUM3, NUM4, ENTER = 13, SPACEBAR = 32, ESC = 27
 	};
 
-	inline constexpr InputKey getInputKey() // Returns the key that has been pressed
+	inline InputKey getInputKey() // Returns the key that has been pressed
 	{
 		return _kbhit() ? static_cast<InputKey>(_getch()) : InputKey::NONE;
 	}
 
-	inline constexpr void systemPause() // Pauses the execution until a key is pressed
+	inline void systemPause() // Pauses the execution until a key is pressed
 	{
 		while (getInputKey() == InputKey::NONE);
 	}

@@ -3,8 +3,8 @@
 #include <fstream>
 #include "ClashofEntios.hh"
 #include "Renderer.hh"
-#include <windows.h>
 
+//Class Map
 Map::Map(int _rows, int _columns) {
 	row = _rows;
 	column = _columns;
@@ -36,7 +36,7 @@ void Map::drawMap() {
 	for (int i = 0; i < row; i++) {
 		for (int j = 0; j < column; j++) {
 			if (map[i][j] == 'X') {
-				enti::cout << enti::Color::RED << map[i][j];
+				enti::cout << enti::Color::LIGHTRED << map[i][j];
 				enti::cout << " ";
 			}
 			else if (map[i][j] == '.') {
@@ -44,11 +44,11 @@ void Map::drawMap() {
 				enti::cout << " ";
 			}
 			else if (map[i][j] == ':') {
-				enti::cout << enti::Color::GREEN << map[i][j];
+				enti::cout << enti::Color::LIGHTGREEN << map[i][j];
 				enti::cout << " ";
 			}
 			else if (map[i][j] == 'O') {
-				enti::cout << enti::Color::CYAN << map[i][j];
+				enti::cout << enti::Color::LIGHTCYAN << map[i][j];
 				enti::cout << " ";
 			}
 			else if (map[i][j] == '\n') {
@@ -62,6 +62,21 @@ void Map::drawMap() {
 	}
 	enti::cout<<enti::cend;
 }
+
 Map::~Map() {
+
+}
+
+
+//Class Player
+Player::Player() {
+
+}
+
+void Player::PlayerMovement() {
+
+}
+
+Player::~Player() {
 
 }

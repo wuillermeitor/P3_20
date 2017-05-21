@@ -1,9 +1,7 @@
-#include "ClashofEntios.hh"
-#include "Renderer.hh"
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <windows.h>
+#include "ClashofEntios.hh"
 
 
 void main() {
