@@ -69,14 +69,41 @@ Map::~Map() {
 
 
 //Class Player
-Player::Player() {
+Player::Player(int posx, int posy, Map &mapa) :map{mapa} {
+	currentx = posx;
+	currenty = posy;
+
+	for (int i = 0; i < mapa.row; i++) {
+		for (int j = 0; j < mapa.column; j++) {
+			if (mapa.map[i][j] >= 'A' && mapa.map[i][j] <= 'F') {
+				Entio entio(mapa.map[i][j], i, j);
+			}
+		}
+	}
+}
+
+Player::Player(int posx, int posy, Map &mapa) :map{ mapa } {
+	currentx = posx;
+	currenty = posy;
+
+	for (int i = 0; i < mapa.row; i++) {
+		for (int j = 0; j < mapa.column; j++) {
+			if (mapa.map[i][j] >= '1' && mapa.map[i][j] <= '6') {
+				Entio entio(mapa.map[i][j], i, j);
+			}
+		}
+	}
+}
+
+void Player::PlayerMovement(int posx, int posy, int entioactual) {
 
 }
 
-void Player::PlayerMovement() {
-
-}
-
-Player::~Player() {
-
+Entio::Entio(char identificador, int x, int y) {
+	entio = identificador;
+	posx = x;
+	posy = y;
+	vida = 10;
+	flechas = 10;
+	fatiga = 0;
 }
