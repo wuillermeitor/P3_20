@@ -5,9 +5,51 @@
 #include <conio.h>
 #include <queue>
 
+struct vector {
+	int filas = 36, columnas = 74;
+};
+
+enum class symbols :char {
+	MONTAÑA='X', AGUA='O', 
+	BOSQUE=':', TIERRA='.',
+
+	ENTIO1 = '1', ENTIO2 = '2', ENTIO3 = '3',
+	ENTIO4 = '4', ENTIO5 = '5', ENTIO6 = '6',
+
+	ENTIOA = 'A', ENTIOB = 'B', ENTIOC = 'C',
+	ENTIOD = 'D', ENTIOE = 'E', ENTIOF = 'F',
+
+	EMPTY=' '
+};
+
+class Map {
+	//con los "friend class" permitimos a otras clases acceder a los atributos y métodos del mapa.
+	friend class Player;
+public:
+	void ReadMap(std::ifstream &file, std::string filename);
+	void drawMap(bool _player1Torn);//método que crea el mapa.
+	symbols posicion(const vector & location);
+	void modificar(const vector & target, const symbols & value);//método que modifica una posición del mapa.
+	void dibujar();//método que dibuja el mapa en la consola.
+	~Map();//destructor del Map.
+private:
+	vector dimensiones;
+	symbols**infoMap;
+	char**map;
+};
+
+
+
+
+
+
+
+
+/*
 class Map {
 public:
 	//Métodos
+
 	Map(int _rows, int _columns);
 	void readMap(std::ifstream &file, std::string filename);
 	void drawMap();
@@ -23,8 +65,7 @@ class Player {
 public:
 	//Métodos
 	Player(int posx, int posy, Map &mapa);
-	Player(int posx, int posy, Map &mapa);
-	void PlayerMovement(int posx, int posy, int entioactual);
+	void PlayerMovement(const enti::InputKey & key, int posx, int posy, int entioactual);
 	~Player();
 
 	//Atributos
@@ -50,3 +91,4 @@ public:
 	int fatiga;
 	int flechas;
 };
+*/

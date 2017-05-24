@@ -4,11 +4,12 @@
 #include "ClashofEntios.hh"
 
 
-void main() {
-	std::ifstream file;
-	int rows = 36;
-	int columns = 74;
-	Map map(rows, columns);
+std::ifstream file;
+Map map;
+bool player1torn;
 
-	map.readMap(file, "default.cfg");
+void main() {
+	player1torn = true;
+	map.ReadMap(file, "default.cfg");
+	map.drawMap(player1torn);
 }

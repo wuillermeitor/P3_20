@@ -4,106 +4,196 @@
 #include "ClashofEntios.hh"
 #include "Renderer.hh"
 
-//Class Map
-Map::Map(int _rows, int _columns) {
-	row = _rows;
-	column = _columns;
-	map = new char*[row];
-	for (int i = 0; i < row; i++) {
-		map[i] = new char[column];
-	}
-}
-
-void Map::readMap(std::ifstream &file, std::string filename) {
+//CLASE MAPA
+void Map::ReadMap(std::ifstream &file, std::string filename) {
 	file.open(filename);
-	std::string line;
-	char c;
+	char mapCharacter;
 
 	if (file.is_open()) {
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < column; j++) {
-				file.get(c);
-				map[i][j] = c;
-				std::cout << map[i][j];
+		infoMap = new symbols*[dimensiones.filas];
+		for (int i = 0; i < dimensiones.filas; i++) {
+			infoMap[i] = new symbols[dimensiones.columnas];
+			for (int j = 0; j < dimensiones.columnas; j++) {
+				file.get(mapCharacter);
+				if (mapCharacter == static_cast<char>(symbols::MONTAÑA)) {
+					infoMap[i][j] = symbols::MONTAÑA;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::AGUA)) {
+					infoMap[i][j] = symbols::AGUA;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::BOSQUE)) {
+					infoMap[i][j] = symbols::BOSQUE;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::TIERRA)) {
+					infoMap[i][j] = symbols::TIERRA;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIO1)) {
+					infoMap[i][j] = symbols::ENTIO1;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIO2)) {
+					infoMap[i][j] = symbols::ENTIO2;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIO3)) {
+					infoMap[i][j] = symbols::ENTIO3;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIO4)) {
+					infoMap[i][j] = symbols::ENTIO4;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIO5)) {
+					infoMap[i][j] = symbols::ENTIO5;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIO6)) {
+					infoMap[i][j] = symbols::ENTIO6;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIOA)) {
+					infoMap[i][j] = symbols::ENTIOA;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIOB)) {
+					infoMap[i][j] = symbols::ENTIOB;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIOC)) {
+					infoMap[i][j] = symbols::ENTIOC;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIOD)) {
+					infoMap[i][j] = symbols::ENTIOD;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIOE)) {
+					infoMap[i][j] = symbols::ENTIOE;
+				}
+				else if (mapCharacter == static_cast<char>(symbols::ENTIOF)) {
+					infoMap[i][j] = symbols::ENTIOF;
+				}
+				else {
+					infoMap[i][j] = symbols::EMPTY;
+				}
 			}
 		}
 	}
 	file.close();
-	drawMap();
 }
 
-void Map::drawMap() {
-	for (int i = 0; i < row; i++) {
-		for (int j = 0; j < column; j++) {
-			if (map[i][j] == 'X') {
-				enti::cout << enti::Color::LIGHTRED << map[i][j];
+void Map::drawMap(bool _player1Torn) {
+
+	enti::Color playerA;
+	enti::Color playerB;
+
+	if (_player1Torn) {
+		playerA = enti::Color::YELLOW;
+		playerB = enti::Color::WHITE;
+	}
+	else {
+		playerA = enti::Color::WHITE;
+		playerB = enti::Color::YELLOW;
+	}
+
+	for (int i = 0; i < dimensiones.filas; i++) {
+		for (int j = 0; j < dimensiones.columnas; j++) {
+			if (infoMap[i][j] == symbols::MONTAÑA) {
+				enti::cout << enti::Color::LIGHTRED << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
-			else if (map[i][j] == '.') {
-				enti::cout << enti::Color::WHITE << map[i][j];
+			else if (infoMap[i][j] == symbols::AGUA) {
+				enti::cout << enti::Color::LIGHTCYAN << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
-			else if (map[i][j] == ':') {
-				enti::cout << enti::Color::LIGHTGREEN << map[i][j];
+			else if (infoMap[i][j] == symbols::BOSQUE) {
+				enti::cout << enti::Color::LIGHTGREEN << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
-			else if (map[i][j] == 'O') {
-				enti::cout << enti::Color::LIGHTCYAN << map[i][j];
+			else if (infoMap[i][j] == symbols::TIERRA) {
+				enti::cout << enti::Color::WHITE << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
-			else if (map[i][j] == '\n') {
-				enti::cout << enti::endl;
+
+			else if (infoMap[i][j] == symbols::ENTIOA) {
+				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
 			}
-			else {
-				enti::cout << map[i][j];
+			else if (infoMap[i][j] == symbols::ENTIOB) {
+				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
+			}
+			else if (infoMap[i][j] == symbols::ENTIOC) {
+				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
+			}
+			else if (infoMap[i][j] == symbols::ENTIOD) {
+				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
+			}
+			else if (infoMap[i][j] == symbols::ENTIOE) {
+				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
+			}
+			else if (infoMap[i][j] == symbols::ENTIOF) {
+				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
+			}
+
+			else if (infoMap[i][j] == symbols::ENTIO1) {
+				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
+			}
+			else if (infoMap[i][j] == symbols::ENTIO2) {
+				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
+			}
+			else if (infoMap[i][j] == symbols::ENTIO3) {
+				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
+			}
+			else if (infoMap[i][j] == symbols::ENTIO4) {
+				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
+			}
+			else if (infoMap[i][j] == symbols::ENTIO5) {
+				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
+			}
+			else if (infoMap[i][j] == symbols::ENTIO6) {
+				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 		}
+		enti::cout << enti::endl;
 	}
-	enti::cout<<enti::cend;
+	enti::cout << enti::cend;
 }
 
 Map::~Map() {
-
 }
 
+
+
+
+
+/*
 
 //Class Player
 Player::Player(int posx, int posy, Map &mapa) :map{mapa} {
-	currentx = posx;
-	currenty = posy;
+currentx = posx;
+currenty = posy;
 
-	for (int i = 0; i < mapa.row; i++) {
-		for (int j = 0; j < mapa.column; j++) {
-			if (mapa.map[i][j] >= 'A' && mapa.map[i][j] <= 'F') {
-				Entio entio(mapa.map[i][j], i, j);
-			}
-		}
-	}
+for (int i = 0; i < mapa.row; i++) {
+for (int j = 0; j < mapa.column; j++) {
+if (mapa.map[i][j] >= 'A' && mapa.map[i][j] <= 'F') {
+Entio entio(mapa.map[i][j], i, j);
+}
+}
+}
 }
 
-Player::Player(int posx, int posy, Map &mapa) :map{ mapa } {
-	currentx = posx;
-	currenty = posy;
-
-	for (int i = 0; i < mapa.row; i++) {
-		for (int j = 0; j < mapa.column; j++) {
-			if (mapa.map[i][j] >= '1' && mapa.map[i][j] <= '6') {
-				Entio entio(mapa.map[i][j], i, j);
-			}
-		}
-	}
-}
 
 void Player::PlayerMovement(int posx, int posy, int entioactual) {
 
 }
 
 Entio::Entio(char identificador, int x, int y) {
-	entio = identificador;
-	posx = x;
-	posy = y;
-	vida = 10;
-	flechas = 10;
-	fatiga = 0;
+entio = identificador;
+posx = x;
+posy = y;
+vida = 10;
+flechas = 10;
+fatiga = 0;
 }
+*/
