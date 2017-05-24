@@ -22,6 +22,11 @@ enum class symbols :char {
 	EMPTY=' '
 };
 
+struct Entio {
+	int fatiga = 0;
+	int flechas = 10;
+};
+
 class Map {
 	//con los "friend class" permitimos a otras clases acceder a los atributos y métodos del mapa.
 	friend class Player;
@@ -30,12 +35,26 @@ public:
 	void drawMap(bool _player1Torn);//método que crea el mapa.
 	symbols posicion(const vector & location);
 	void modificar(const vector & target, const symbols & value);//método que modifica una posición del mapa.
-	void dibujar();//método que dibuja el mapa en la consola.
 	~Map();//destructor del Map.
 private:
 	vector dimensiones;
 	symbols**infoMap;
 	char**map;
+};
+
+class Player {
+public:
+	void StartPlayer(Map * pCurrentMap, bool _playerA);//método que le da una posición inicial al jugador.
+	bool PlayerMovement(const enti::InputKey & key, bool _playerA);//método que permite al jugador moverse.
+	vector getPos();
+	int accionesPA = 10;
+	int accionesPB = 10;
+	int entioActual = 0;
+private:
+	vector posicion;
+	Map * CurrentMap;
+	Entio EntiosPA[6];
+	Entio EntiosPB[6];
 };
 
 

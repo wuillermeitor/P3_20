@@ -160,9 +160,62 @@ void Map::drawMap(bool _player1Torn) {
 	enti::cout << enti::cend;
 }
 
-Map::~Map() {
+symbols Map::posicion(const vector & location) {
+	return infoMap[location.filas][location.columnas];
 }
 
+void Map::modificar(const vector & target, const symbols & value) {
+	infoMap[target.filas][target.columnas] = value;
+}
+
+Map::~Map() {
+	for (int i = 0; i < dimensiones.filas; i++) {
+		delete[] this->infoMap[i];
+	}
+	delete[] this->infoMap;
+}
+
+//CLASE PLAYER
+bool Player::PlayerMovement(const enti::InputKey & key, bool _playerA) {
+	CurrentMap->modificar(posicion, symbols::EMPTY);
+	if (key != enti::InputKey::NONE) {
+		switch (key) {
+		case enti::InputKey::W:
+			if (posicion.columnas != 0) {
+				posicion.columnas--;
+			}
+			break;
+		case enti::InputKey::A:
+			if (posicion.filas != 0) {
+				posicion.filas--;
+			}
+			break;
+		case enti::InputKey::S:
+			if (posicion.columnas + 1 < CurrentMap->dimensiones.columnas) {
+				posicion.columnas++;
+			}
+			break;
+		case enti::InputKey::D:
+			if (posicion.filas + 1 < CurrentMap->dimensiones.filas) {
+				posicion.filas++;
+			}
+			break;
+		case enti::InputKey::ENTER:
+			if (entioActual + 1 > 5) {
+				entioActual = 0;
+			}
+			else {
+				entioActual++;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	if (_playerA) {
+
+	}
+}
 
 
 
