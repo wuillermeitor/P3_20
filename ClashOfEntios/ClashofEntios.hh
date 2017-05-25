@@ -3,15 +3,15 @@
 #include <iostream>
 #include "Input.inl.hh"
 #include <conio.h>
-#include <queue>
+#include <vector>
 
 struct vector {
 	int filas = 36, columnas = 74;
 };
 
 enum class symbols :char {
-	MONTAÑA='X', AGUA='O', 
-	BOSQUE=':', TIERRA='.',
+	MONTAÑA = 'X', AGUA = 'O', 
+	BOSQUE = ':', TIERRA = '.',
 
 	ENTIO1 = '1', ENTIO2 = '2', ENTIO3 = '3',
 	ENTIO4 = '4', ENTIO5 = '5', ENTIO6 = '6',
@@ -19,16 +19,20 @@ enum class symbols :char {
 	ENTIOA = 'A', ENTIOB = 'B', ENTIOC = 'C',
 	ENTIOD = 'D', ENTIOE = 'E', ENTIOF = 'F',
 
-	EMPTY=' '
+	EMPTY = ' '
 };
 
 struct Entio {
+	symbols caracter;
+	int vida = 10;
 	int fatiga = 0;
 	int flechas = 10;
 };
 
+std::vector<Entio>EntioPA;
+std::vector<Entio>EntioPB;
+
 class Map {
-	//con los "friend class" permitimos a otras clases acceder a los atributos y métodos del mapa.
 	friend class Player;
 public:
 	void ReadMap(std::ifstream &file, std::string filename);
@@ -43,9 +47,10 @@ private:
 };
 
 class Player {
+	friend class Map;
 public:
 	void StartPlayer(Map * pCurrentMap, bool _playerA);//método que le da una posición inicial al jugador.
-	bool PlayerMovement(const enti::InputKey & key, bool _playerA);//método que permite al jugador moverse.
+	void PlayerMovement(const enti::InputKey & key, bool _playerA);//método que permite al jugador moverse.
 	vector getPos();
 	int accionesPA = 10;
 	int accionesPB = 10;
@@ -53,8 +58,6 @@ public:
 private:
 	vector posicion;
 	Map * CurrentMap;
-	Entio EntiosPA[6];
-	Entio EntiosPB[6];
 };
 
 

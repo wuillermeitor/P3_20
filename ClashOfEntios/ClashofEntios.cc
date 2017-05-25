@@ -33,39 +33,64 @@ void Map::ReadMap(std::ifstream &file, std::string filename) {
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO1)) {
 					infoMap[i][j] = symbols::ENTIO1;
+					EntioPB.push_back(Entio());
+					EntioPB[0].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO2)) {
 					infoMap[i][j] = symbols::ENTIO2;
+					EntioPB.push_back(Entio());
+					EntioPB[1].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO3)) {
 					infoMap[i][j] = symbols::ENTIO3;
+					EntioPB.push_back(Entio());
+					EntioPB[2].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO4)) {
 					infoMap[i][j] = symbols::ENTIO4;
+					EntioPB.push_back(Entio());
+					EntioPB[3].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO5)) {
 					infoMap[i][j] = symbols::ENTIO5;
+					EntioPB.push_back(Entio());
+					EntioPB[4].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO6)) {
 					infoMap[i][j] = symbols::ENTIO6;
+					EntioPB.push_back(Entio());
+					EntioPB[5].caracter = infoMap[i][j];
 				}
+
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOA)) {
 					infoMap[i][j] = symbols::ENTIOA;
+					EntioPA.push_back(Entio());
+					EntioPA[0].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOB)) {
 					infoMap[i][j] = symbols::ENTIOB;
+					EntioPA.push_back(Entio());
+					EntioPA[1].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOC)) {
 					infoMap[i][j] = symbols::ENTIOC;
+					EntioPA.push_back(Entio());
+					EntioPA[2].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOD)) {
 					infoMap[i][j] = symbols::ENTIOD;
+					EntioPA.push_back(Entio());
+					EntioPA[3].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOE)) {
 					infoMap[i][j] = symbols::ENTIOE;
+					EntioPA.push_back(Entio());
+					EntioPA[4].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOF)) {
 					infoMap[i][j] = symbols::ENTIOF;
+					EntioPA.push_back(Entio());
+					EntioPA[5].caracter = infoMap[i][j];
 				}
 				else {
 					infoMap[i][j] = symbols::EMPTY;
@@ -172,6 +197,7 @@ void Map::modificar(const vector & target, const symbols & value) {
 	infoMap[target.filas][target.columnas] = value;
 }
 
+
 Map::~Map() {
 	for (int i = 0; i < dimensiones.filas; i++) {
 		delete[] this->infoMap[i];
@@ -180,20 +206,13 @@ Map::~Map() {
 }
 
 //CLASE PLAYER
-bool Player::PlayerMovement(const enti::InputKey & key, bool _playerA) {
+void Player::PlayerMovement(const enti::InputKey & key, bool _playerA) {
 	CurrentMap->modificar(posicion, symbols::EMPTY);
-	if (_playerA) {
+	int currentEntio;
 
-	}
 	if (key != enti::InputKey::NONE) {
 		switch (key) {
 		case enti::InputKey::ENTER:
-			if (entioActual + 1 > 5) {
-				entioActual = 0;
-			}
-			else {
-				entioActual++;
-			}
 			break;
 		case enti::InputKey::W:
 			if (posicion.columnas != static_cast<char>(symbols::MONTAÑA) && posicion.columnas != static_cast<char>(symbols::AGUA)) {
@@ -219,6 +238,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, bool _playerA) {
 			break;
 		}
 	}
+	CurrentMap->modificar(posicion, symbols::ENTIOA);
 }
 
 
