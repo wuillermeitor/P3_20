@@ -29,8 +29,6 @@ struct Entio {
 	int flechas = 10;
 };
 
-std::vector<Entio>EntioPA;
-std::vector<Entio>EntioPB;
 
 class Map {
 	friend class Player;
@@ -43,8 +41,10 @@ public:
 private:
 	vector dimensiones;
 	symbols**infoMap;
-	char**map;
+	Player &playerA;
+	Player &playerB;
 };
+
 
 class Player {
 	friend class Map;
@@ -54,7 +54,10 @@ public:
 	vector getPos();
 	int accionesPA = 10;
 	int accionesPB = 10;
-	int entioActual = 0;
+
+	std::vector<Entio>EntioPA;
+	std::vector<Entio>EntioPB;
+
 private:
 	vector posicion;
 	Map * CurrentMap;
