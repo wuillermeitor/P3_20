@@ -39,6 +39,7 @@ public:
 	void drawMap(bool _player1Torn);//método que crea el mapa.
 	symbols posicion(const vector & location);
 	void modificar(const vector & target, const symbols & value);//método que modifica una posición del mapa.
+	void modificarPos(int & _row, int & _column, const symbols & value);//método que modifica una posición del mapa.
 	~Map();//destructor del Map.
 private:
 	vector dimensiones;
@@ -49,16 +50,15 @@ private:
 class Player {
 	friend class Map;
 public:
-	Player(Map * pCurrentMap, std::vector<Entio>EntiosPlayerA, std::vector<Entio>EntiosPlayerB);
-	void StartPlayer(Map * pCurrentMap, bool _playerA);//método que le da una posición inicial al jugador.
-	void PlayerMovement(const enti::InputKey & key, bool _playerA);//método que permite al jugador moverse.
+	Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<Entio>&EntiosPlayerB);
+	void PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer);//método que permite al jugador moverse.
 	vector getPos();
 	int accionesPA = 10;
 	int accionesPB = 10;
 
 
 private:
-	vector posicion;
+	vector posicionPlayer;
 	Map * CurrentMap;
 };
 

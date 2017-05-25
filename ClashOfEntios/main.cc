@@ -10,11 +10,14 @@ bool player1torn;
 
 std::vector<Entio>EntioPA;
 std::vector<Entio>EntioPB;
-
 void main() {
-	enti::InputKey key;
+	enti::InputKey tecla{ enti::InputKey::ENTER };
 	player1torn = true;
 	map.ReadMap(file, "default.cfg");
 	map.drawMap(player1torn);
-	Player player(&map, EntioPA, EntioPB);
+	Player player(&map, EntioPA, EntioPB); 
+	while (true) {
+		map.drawMap(player1torn);
+		player.PlayerMovement(tecla, EntioPA);
+	}
 }

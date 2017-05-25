@@ -3,9 +3,6 @@
 #include <fstream>
 #include "ClashofEntios.hh"
 #include "Renderer.hh"
-//Examen
-//mucha cosa pequeña
-
 
 
 //CLASE MAPA
@@ -173,11 +170,15 @@ void Map::modificar(const vector & target, const symbols & value) {
 	infoMap[target.filas][target.columnas] = value;
 }
 
+void Map::modificarPos(int & _row, int & _column, const symbols & value) {
+	infoMap[_row][_column] = value;
+}
+
 Map::~Map() {
 }
 
 //CLASE PLAYER
-Player::Player(Map * pCurrentMap, std::vector<Entio>EntiosPlayerA, std::vector<Entio>EntiosPlayerB) {
+Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<Entio>&EntiosPlayerB) {
 	CurrentMap = pCurrentMap;
 	for (int i = 0; i < CurrentMap->dimensiones.filas; i++) {
 		for (int j = 0; j < CurrentMap->dimensiones.columnas; j++) {
@@ -258,71 +259,37 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>EntiosPlayerA, std::vector<E
 	}
 }
 
-void Player::PlayerMovement(const enti::InputKey & key, bool _playerA) {
-	CurrentMap->modificar(posicion, symbols::EMPTY);
-	int currentEntio;
+void Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer) {
+	int currentEntio = 1;
+	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
 
 	if (key != enti::InputKey::NONE) {
 		switch (key) {
 		case enti::InputKey::ENTER:
 			break;
 		case enti::InputKey::W:
-			if (posicion.columnas != static_cast<char>(symbols::MONTAÑA) && posicion.columnas != static_cast<char>(symbols::AGUA)) {
-				posicion.columnas--;
+			if (CurrentPlayer[currentEntio].CurrentCol != static_cast<char>(symbols::MONTAÑA) && CurrentPlayer[currentEntio].CurrentCol != static_cast<char>(symbols::AGUA)) {
+				CurrentPlayer[currentEntio].CurrentCol--;
 			}
 			break;
 		case enti::InputKey::A:
-			if (posicion.filas != static_cast<char>(symbols::MONTAÑA) && posicion.filas != static_cast<char>(symbols::AGUA)) {
-				posicion.filas--;
+			if (CurrentPlayer[currentEntio].CurrentRow != static_cast<char>(symbols::MONTAÑA) && CurrentPlayer[currentEntio].CurrentRow != static_cast<char>(symbols::AGUA)) {
+				CurrentPlayer[currentEntio].CurrentRow--;
 			}
 			break;
 		case enti::InputKey::S:
-			if (posicion.columnas + 1 != static_cast<char>(symbols::MONTAÑA) && posicion.columnas + 1 != static_cast<char>(symbols::AGUA)) {
-				posicion.columnas++;
+			if (CurrentPlayer[currentEntio].CurrentCol + 1 != static_cast<char>(symbols::MONTAÑA) && CurrentPlayer[currentEntio].CurrentCol + 1 != static_cast<char>(symbols::AGUA)) {
+				CurrentPlayer[currentEntio].CurrentCol++;
 			}
 			break;
 		case enti::InputKey::D:
-			if (posicion.filas + 1 != static_cast<char>(symbols::MONTAÑA) && posicion.filas + 1 != static_cast<char>(symbols::AGUA)) {
-				posicion.filas++;
+			if (CurrentPlayer[currentEntio].CurrentRow + 1 != static_cast<char>(symbols::MONTAÑA) && CurrentPlayer[currentEntio].CurrentRow + 1 != static_cast<char>(symbols::AGUA)) {
+				CurrentPlayer[currentEntio].CurrentRow++;
 			}
 			break;
 		default:
 			break;
 		}
 	}
-	CurrentMap->modificar(posicion, symbols::ENTIOA);
+	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].caracter);
 }
-
-
-
-
-/*
-
-//Class Player
-Player::Player(int posx, int posy, Map &mapa) :map{mapa} {
-currentx = posx;
-currenty = posy;
-
-for (int i = 0; i < mapa.row; i++) {
-for (int j = 0; j < mapa.column; j++) {
-if (mapa.map[i][j] >= 'A' && mapa.map[i][j] <= 'F') {
-Entio entio(mapa.map[i][j], i, j);
-}
-}
-}
-}
-
-
-void Player::PlayerMovement(int posx, int posy, int entioactual) {
-
-}
-
-Entio::Entio(char identificador, int x, int y) {
-entio = identificador;
-posx = x;
-posy = y;
-vida = 10;
-flechas = 10;
-fatiga = 0;
-}
-*/
