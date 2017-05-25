@@ -3,6 +3,10 @@
 #include <fstream>
 #include "ClashofEntios.hh"
 #include "Renderer.hh"
+//Examen
+//mucha cosa pequeña
+
+
 
 //CLASE MAPA
 void Map::ReadMap(std::ifstream &file, std::string filename) {
