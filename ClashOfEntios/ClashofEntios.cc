@@ -178,28 +178,11 @@ Map::~Map() {
 //CLASE PLAYER
 bool Player::PlayerMovement(const enti::InputKey & key, bool _playerA) {
 	CurrentMap->modificar(posicion, symbols::EMPTY);
+	if (_playerA) {
+
+	}
 	if (key != enti::InputKey::NONE) {
 		switch (key) {
-		case enti::InputKey::W:
-			if (posicion.columnas != 0) {
-				posicion.columnas--;
-			}
-			break;
-		case enti::InputKey::A:
-			if (posicion.filas != 0) {
-				posicion.filas--;
-			}
-			break;
-		case enti::InputKey::S:
-			if (posicion.columnas + 1 < CurrentMap->dimensiones.columnas) {
-				posicion.columnas++;
-			}
-			break;
-		case enti::InputKey::D:
-			if (posicion.filas + 1 < CurrentMap->dimensiones.filas) {
-				posicion.filas++;
-			}
-			break;
 		case enti::InputKey::ENTER:
 			if (entioActual + 1 > 5) {
 				entioActual = 0;
@@ -208,12 +191,29 @@ bool Player::PlayerMovement(const enti::InputKey & key, bool _playerA) {
 				entioActual++;
 			}
 			break;
+		case enti::InputKey::W:
+			if (posicion.columnas != static_cast<char>(symbols::MONTAÑA) && posicion.columnas != static_cast<char>(symbols::AGUA)) {
+				posicion.columnas--;
+			}
+			break;
+		case enti::InputKey::A:
+			if (posicion.filas != static_cast<char>(symbols::MONTAÑA) && posicion.filas != static_cast<char>(symbols::AGUA)) {
+				posicion.filas--;
+			}
+			break;
+		case enti::InputKey::S:
+			if (posicion.columnas + 1 != static_cast<char>(symbols::MONTAÑA) && posicion.columnas + 1 != static_cast<char>(symbols::AGUA)) {
+				posicion.columnas++;
+			}
+			break;
+		case enti::InputKey::D:
+			if (posicion.filas + 1 != static_cast<char>(symbols::MONTAÑA) && posicion.filas + 1 != static_cast<char>(symbols::AGUA)) {
+				posicion.filas++;
+			}
+			break;
 		default:
 			break;
 		}
-	}
-	if (_playerA) {
-
 	}
 }
 
