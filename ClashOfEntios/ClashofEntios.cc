@@ -33,64 +33,40 @@ void Map::ReadMap(std::ifstream &file, std::string filename) {
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO1)) {
 					infoMap[i][j] = symbols::ENTIO1;
-					EntioPB.push_back(Entio());
-					EntioPB[0].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO2)) {
 					infoMap[i][j] = symbols::ENTIO2;
-					EntioPB.push_back(Entio());
-					EntioPB[1].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO3)) {
 					infoMap[i][j] = symbols::ENTIO3;
-					EntioPB.push_back(Entio());
-					EntioPB[2].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO4)) {
 					infoMap[i][j] = symbols::ENTIO4;
-					EntioPB.push_back(Entio());
-					EntioPB[3].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO5)) {
 					infoMap[i][j] = symbols::ENTIO5;
-					EntioPB.push_back(Entio());
-					EntioPB[4].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIO6)) {
 					infoMap[i][j] = symbols::ENTIO6;
-					EntioPB.push_back(Entio());
-					EntioPB[5].caracter = infoMap[i][j];
 				}
 
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOA)) {
 					infoMap[i][j] = symbols::ENTIOA;
-					EntioPA.push_back(Entio());
-					EntioPA[0].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOB)) {
 					infoMap[i][j] = symbols::ENTIOB;
-					EntioPA.push_back(Entio());
-					EntioPA[1].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOC)) {
 					infoMap[i][j] = symbols::ENTIOC;
-					EntioPA.push_back(Entio());
-					EntioPA[2].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOD)) {
 					infoMap[i][j] = symbols::ENTIOD;
-					EntioPA.push_back(Entio());
-					EntioPA[3].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOE)) {
 					infoMap[i][j] = symbols::ENTIOE;
-					EntioPA.push_back(Entio());
-					EntioPA[4].caracter = infoMap[i][j];
 				}
 				else if (mapCharacter == static_cast<char>(symbols::ENTIOF)) {
 					infoMap[i][j] = symbols::ENTIOF;
-					EntioPA.push_back(Entio());
-					EntioPA[5].caracter = infoMap[i][j];
 				}
 				else {
 					infoMap[i][j] = symbols::EMPTY;
@@ -197,15 +173,91 @@ void Map::modificar(const vector & target, const symbols & value) {
 	infoMap[target.filas][target.columnas] = value;
 }
 
-
 Map::~Map() {
-	for (int i = 0; i < dimensiones.filas; i++) {
-		delete[] this->infoMap[i];
-	}
-	delete[] this->infoMap;
 }
 
 //CLASE PLAYER
+Player::Player(Map * pCurrentMap, std::vector<Entio>EntiosPlayerA, std::vector<Entio>EntiosPlayerB) {
+	CurrentMap = pCurrentMap;
+	for (int i = 0; i < CurrentMap->dimensiones.filas; i++) {
+		for (int j = 0; j < CurrentMap->dimensiones.columnas; j++) {
+			if (CurrentMap->infoMap[i][j] == symbols::ENTIOA) {
+				EntiosPlayerA.push_back(Entio());
+				EntiosPlayerA[0].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerA[0].CurrentRow = i;
+				EntiosPlayerA[0].CurrentCol = j;
+			}
+			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOB) {
+				EntiosPlayerA.push_back(Entio());
+				EntiosPlayerA[1].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerA[1].CurrentRow = i;
+				EntiosPlayerA[1].CurrentCol = j;
+			}
+			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOC) {
+				EntiosPlayerA.push_back(Entio());
+				EntiosPlayerA[2].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerA[2].CurrentRow = i;
+				EntiosPlayerA[2].CurrentCol = j;
+			}
+			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOD) {
+				EntiosPlayerA.push_back(Entio());
+				EntiosPlayerA[3].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerA[3].CurrentRow = i;
+				EntiosPlayerA[3].CurrentCol = j;
+			}
+			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOE) {
+				EntiosPlayerA.push_back(Entio());
+				EntiosPlayerA[4].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerA[4].CurrentRow = i;
+				EntiosPlayerA[4].CurrentCol = j;
+			}
+			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOF) {
+				EntiosPlayerA.push_back(Entio());
+				EntiosPlayerA[5].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerA[5].CurrentRow = i;
+				EntiosPlayerA[5].CurrentCol = j;
+			}
+
+			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO1) {
+				EntiosPlayerB.push_back(Entio());
+				EntiosPlayerB[0].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerB[0].CurrentRow = i;
+				EntiosPlayerB[0].CurrentCol = j;
+			}
+			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO2) {
+				EntiosPlayerB.push_back(Entio());
+				EntiosPlayerB[1].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerB[1].CurrentRow = i;
+				EntiosPlayerB[1].CurrentCol = j;
+			}
+			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO3) {
+				EntiosPlayerB.push_back(Entio());
+				EntiosPlayerB[2].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerB[2].CurrentRow = i;
+				EntiosPlayerB[2].CurrentCol = j;
+			}
+			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO4) {
+				EntiosPlayerB.push_back(Entio());
+				EntiosPlayerB[3].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerB[3].CurrentRow = i;
+				EntiosPlayerB[3].CurrentCol = j;
+			}
+			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO5) {
+				EntiosPlayerB.push_back(Entio());
+				EntiosPlayerB[4].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerB[4].CurrentRow = i;
+				EntiosPlayerB[4].CurrentCol = j;
+			}
+			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO6) {
+				EntiosPlayerB.push_back(Entio());
+				EntiosPlayerB[5].caracter = CurrentMap->infoMap[i][j];
+				EntiosPlayerB[5].CurrentRow = i;
+				EntiosPlayerB[5].CurrentCol = j;
+			}
+		}
+	}
+}
+
 void Player::PlayerMovement(const enti::InputKey & key, bool _playerA) {
 	CurrentMap->modificar(posicion, symbols::EMPTY);
 	int currentEntio;

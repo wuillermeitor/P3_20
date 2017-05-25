@@ -24,6 +24,8 @@ enum class symbols :char {
 
 struct Entio {
 	symbols caracter;
+	int CurrentRow;
+	int CurrentCol;
 	int vida = 10;
 	int fatiga = 0;
 	int flechas = 10;
@@ -41,22 +43,19 @@ public:
 private:
 	vector dimensiones;
 	symbols**infoMap;
-	Player &playerA;
-	Player &playerB;
 };
 
 
 class Player {
 	friend class Map;
 public:
+	Player(Map * pCurrentMap, std::vector<Entio>EntiosPlayerA, std::vector<Entio>EntiosPlayerB);
 	void StartPlayer(Map * pCurrentMap, bool _playerA);//método que le da una posición inicial al jugador.
 	void PlayerMovement(const enti::InputKey & key, bool _playerA);//método que permite al jugador moverse.
 	vector getPos();
 	int accionesPA = 10;
 	int accionesPB = 10;
 
-	std::vector<Entio>EntioPA;
-	std::vector<Entio>EntioPB;
 
 private:
 	vector posicion;
