@@ -260,36 +260,38 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 }
 
 void Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer) {
-	int currentEntio = 1;
-	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
 
-	if (key != enti::InputKey::NONE) {
-		switch (key) {
-		case enti::InputKey::ENTER:
-			break;
-		case enti::InputKey::W:
-			if (CurrentPlayer[currentEntio].CurrentCol != static_cast<char>(symbols::MONTAÑA) && CurrentPlayer[currentEntio].CurrentCol != static_cast<char>(symbols::AGUA)) {
-				CurrentPlayer[currentEntio].CurrentCol--;
-			}
-			break;
-		case enti::InputKey::A:
-			if (CurrentPlayer[currentEntio].CurrentRow != static_cast<char>(symbols::MONTAÑA) && CurrentPlayer[currentEntio].CurrentRow != static_cast<char>(symbols::AGUA)) {
-				CurrentPlayer[currentEntio].CurrentRow--;
-			}
-			break;
-		case enti::InputKey::S:
-			if (CurrentPlayer[currentEntio].CurrentCol + 1 != static_cast<char>(symbols::MONTAÑA) && CurrentPlayer[currentEntio].CurrentCol + 1 != static_cast<char>(symbols::AGUA)) {
-				CurrentPlayer[currentEntio].CurrentCol++;
-			}
-			break;
-		case enti::InputKey::D:
-			if (CurrentPlayer[currentEntio].CurrentRow + 1 != static_cast<char>(symbols::MONTAÑA) && CurrentPlayer[currentEntio].CurrentRow + 1 != static_cast<char>(symbols::AGUA)) {
-				CurrentPlayer[currentEntio].CurrentRow++;
-			}
-			break;
-		default:
-			break;
+	if(key!= enti::InputKey::ENTER)
+		CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
+
+	switch (key) {
+	case enti::InputKey::ENTER:
+		if (currentEntio + 1 > 5) { currentEntio = 0; }
+		else { currentEntio++; }
+		break;
+	case enti::InputKey::W:
+		if ((CurrentPlayer[currentEntio].CurrentRow - 1) != static_cast<char>(symbols::MONTAÑA) && (CurrentPlayer[currentEntio].CurrentRow - 1) != static_cast<char>(symbols::AGUA)) {
+			CurrentPlayer[currentEntio].CurrentRow--;
 		}
-	}
+		break;
+	case enti::InputKey::A:
+		if ((CurrentPlayer[currentEntio].CurrentCol + 1) != static_cast<char>(symbols::MONTAÑA) && (CurrentPlayer[currentEntio].CurrentCol + 1) != static_cast<char>(symbols::AGUA)) {
+			CurrentPlayer[currentEntio].CurrentCol--;
+		}
+		break;
+	case enti::InputKey::S:
+		if ((CurrentPlayer[currentEntio].CurrentRow - 1) != static_cast<char>(symbols::MONTAÑA) && (CurrentPlayer[currentEntio].CurrentRow - 1) != static_cast<char>(symbols::AGUA)) {
+			CurrentPlayer[currentEntio].CurrentRow++;
+		}
+		break;
+	case enti::InputKey::D:
+		if ((CurrentPlayer[currentEntio].CurrentCol - 1) != static_cast<char>(symbols::MONTAÑA) && (CurrentPlayer[currentEntio].CurrentCol - 1) != static_cast<char>(symbols::AGUA)) {
+			CurrentPlayer[currentEntio].CurrentCol++;
+		}
+		break;
+	default:
+		break;
+	}	
+		
 	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].caracter);
 }

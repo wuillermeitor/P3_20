@@ -58,8 +58,8 @@ public:
 
 
 private:
-	vector posicionPlayer;
 	Map * CurrentMap;
+	int currentEntio = 0;
 };
 
 
