@@ -53,7 +53,7 @@ public:
 	Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<Entio>&EntiosPlayerB);
 	bool PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer);//método que permite al jugador moverse.
 	vector getPos();
-	int acciones = 10;
+	int acciones = 11;
 
 
 private:

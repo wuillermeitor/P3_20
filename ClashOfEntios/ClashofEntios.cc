@@ -271,22 +271,22 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 			else { currentEntio++; }
 			break;
 		case enti::InputKey::W:
-			if ((CurrentPlayer[currentEntio].CurrentRow - 1) != static_cast<char>(symbols::MONTAÑA) && (CurrentPlayer[currentEntio].CurrentRow - 1) != static_cast<char>(symbols::AGUA)) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] != symbols::AGUA && CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] != symbols::MONTAÑA) {
 				CurrentPlayer[currentEntio].CurrentRow--;
 			}
 			break;
 		case enti::InputKey::A:
-			if ((CurrentPlayer[currentEntio].CurrentCol + 1) != static_cast<char>(symbols::MONTAÑA) && (CurrentPlayer[currentEntio].CurrentCol + 1) != static_cast<char>(symbols::AGUA)) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] != symbols::AGUA && CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] != symbols::MONTAÑA) {
 				CurrentPlayer[currentEntio].CurrentCol--;
 			}
 			break;
 		case enti::InputKey::S:
-			if ((CurrentPlayer[currentEntio].CurrentRow - 1) != static_cast<char>(symbols::MONTAÑA) && (CurrentPlayer[currentEntio].CurrentRow - 1) != static_cast<char>(symbols::AGUA)) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] != symbols::AGUA && CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] != symbols::MONTAÑA) {
 				CurrentPlayer[currentEntio].CurrentRow++;
 			}
 			break;
 		case enti::InputKey::D:
-			if ((CurrentPlayer[currentEntio].CurrentCol - 1) != static_cast<char>(symbols::MONTAÑA) && (CurrentPlayer[currentEntio].CurrentCol - 1) != static_cast<char>(symbols::AGUA)) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] != symbols::AGUA && CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] != symbols::MONTAÑA) {
 				CurrentPlayer[currentEntio].CurrentCol++;
 			}
 			break;
