@@ -6,10 +6,12 @@
 
 //CLASE MAPA
 void Map::ReadMap(std::ifstream &file, std::string filename) {
-	file.open(filename);
-	char mapCharacter;
+	file.open(filename);//abre el fichero al que queremos acceder.
+	char mapCharacter;//variable que usaremos para guardar el caracter de una posición.
 
 	if (file.is_open()) {
+		//bucles for anidados que comprobarán con cada carácter del mapa cuál es su símbolo,
+		//y en función de este, se guardará en infoMap un símbolo u otro.
 		infoMap = new symbols*[dimensiones.filas];
 		for (int i = 0; i < dimensiones.filas; i++) {
 			infoMap[i] = new symbols[dimensiones.columnas];
@@ -70,14 +72,15 @@ void Map::ReadMap(std::ifstream &file, std::string filename) {
 			}
 		}
 	}
-	file.close();
+	file.close();//Finalmente, se cierra el archivo.
 }
 
 void Map::drawMap(bool _player1Torn) {
-
+	//Dos variables que servirán para pintar a los entios del jugador actual de color amarillo.
 	enti::Color playerA;
 	enti::Color playerB;
 
+	//Condición que comprueba cual es el jugador actual y le asigna a cada uno un color.
 	if (_player1Torn) {
 		playerA = enti::Color::YELLOW;
 		playerB = enti::Color::WHITE;
@@ -87,6 +90,7 @@ void Map::drawMap(bool _player1Torn) {
 		playerB = enti::Color::YELLOW;
 	}
 
+	//Bucles for anidados que recorrerán el mapa e irán imprimiéndolo en función de lo encontrado.
 	for (int i = 0; i < dimensiones.filas; i++) {
 		for (int j = 0; j < dimensiones.columnas; j++) {
 			if (infoMap[i][j] == symbols::MONTAÑA) {
