@@ -4,7 +4,6 @@
 #include "ClashofEntios.hh"
 #include "Renderer.hh"
 
-
 //CLASE MAPA
 void Map::ReadMap(std::ifstream &file, std::string filename) {
 	file.open(filename);
@@ -260,46 +259,59 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 }
 
 bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer) {
+	bool accionRealizada = false;
+	int oldRow = CurrentPlayer[currentEntio].CurrentRow;
+	int oldCol = CurrentPlayer[currentEntio].CurrentCol;
 
 	if(key!= enti::InputKey::ENTER)
 		CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
 
-	if (key != enti::InputKey::NONE) {
+	if (key != enti::InputKey::NONE && acciones > 0) {
 		switch (key) {
 		case enti::InputKey::ENTER:
+			CurrentPlayer[currentEntio].fatiga++;
 			if (currentEntio + 1 > 5) { currentEntio = 0; }
 			else { currentEntio++; }
+			accionRealizada = true;
 			break;
 		case enti::InputKey::W:
-			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] != symbols::AGUA && CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] != symbols::MONTAÑA) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentRow--;
+				CurrentPlayer[currentEntio].fatiga++;
+				accionRealizada = true;
 			}
 			break;
 		case enti::InputKey::A:
-			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] != symbols::AGUA && CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] != symbols::MONTAÑA) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentCol--;
+				CurrentPlayer[currentEntio].fatiga++;
+				accionRealizada = true;
 			}
 			break;
 		case enti::InputKey::S:
-			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] != symbols::AGUA && CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] != symbols::MONTAÑA) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentRow++;
+				CurrentPlayer[currentEntio].fatiga++;
+				accionRealizada = true;
 			}
 			break;
 		case enti::InputKey::D:
-			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] != symbols::AGUA && CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] != symbols::MONTAÑA) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentCol++;
+				CurrentPlayer[currentEntio].fatiga++;
+				accionRealizada = true;
 			}
 			break;
 		default:
 			break;
 		}
-		acciones--;
+		if (accionRealizada) { acciones--; }
 	}
 		
 		
 	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].caracter);
 
-	if (acciones == 0) {
+	if (acciones == 0 && key == enti::InputKey::ENTER) {
 		acciones = 10;
 		return true;
 	}

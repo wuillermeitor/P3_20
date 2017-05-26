@@ -4,6 +4,7 @@
 #include "Input.inl.hh"
 #include <conio.h>
 #include <vector>
+#include <queue>
 
 struct vector {
 	int filas = 36, columnas = 74;
@@ -53,7 +54,7 @@ public:
 	Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<Entio>&EntiosPlayerB);
 	bool PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer);//método que permite al jugador moverse.
 	vector getPos();
-	int acciones = 11;
+	int acciones = 10;
 
 
 private:

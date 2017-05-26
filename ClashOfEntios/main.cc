@@ -9,6 +9,9 @@ void swapPlayer(std::vector<Entio>&Player1, std::vector<Entio>&Player2) {
 	Player2 = aux;
 }
 
+void EntiosSort(std::vector<Entio>&Entios) {
+}
+
 std::ifstream file;
 Map map;
 bool player1torn = true;
