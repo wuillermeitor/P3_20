@@ -177,6 +177,10 @@ void Map::modificarPos(int & _row, int & _column, const symbols & value) {
 	infoMap[_row][_column] = value;
 }
 
+symbols Map::guardarCaracter(int & _row, int & _column) {
+	return infoMap[_row][_column];
+}
+
 Map::~Map() {
 }
 
@@ -264,10 +268,15 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 
 bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer) {
 	bool accionRealizada = false;
-	int oldRow = CurrentPlayer[currentEntio].CurrentRow;
-	int oldCol = CurrentPlayer[currentEntio].CurrentCol;
-	if(key!= enti::InputKey::ENTER)
-		CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
+
+	if (key != enti::InputKey::ENTER) {
+		if (CurrentPlayer[currentEntio].fatiga > 0) {
+			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].nextPosition);
+		}
+		else {
+			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
+		}
+	}
 
 	if (key != enti::InputKey::NONE && acciones > 0) {
 		switch (key) {
@@ -280,6 +289,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		case enti::InputKey::W:
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentRow--;
+				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].fatiga++;
 				accionRealizada = true;
 			}
@@ -287,6 +297,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		case enti::InputKey::A:
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentCol--;
+				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].fatiga++;
 				accionRealizada = true;
 			}
@@ -294,6 +305,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		case enti::InputKey::S:
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentRow++;
+				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].fatiga++;
 				accionRealizada = true;
 			}
@@ -301,6 +313,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		case enti::InputKey::D:
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentCol++;
+				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].fatiga++;
 				accionRealizada = true;
 			}
@@ -310,7 +323,6 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		}
 		if (accionRealizada) { acciones--; }
 	}
-		
 		
 	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].caracter);
 
