@@ -9,7 +9,18 @@ void swapPlayer(std::vector<Entio>&Player1, std::vector<Entio>&Player2) {
 	Player2 = aux;
 }
 
-void EntiosSort(std::vector<Entio>&Entios) {
+void ordenarPorFatiga(Map*pcurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<Entio>&EntiosPlayerB) {
+	//turno de jugador A
+	std::vector<Entio> tmp;
+	for (int i = 1; i < EntiosPlayerA.size(); i++) {
+		for (int j = 0; j < EntiosPlayerA.size(); j++) {
+			if (EntiosPlayerA[j].fatiga > EntiosPlayerA[j + 1].fatiga) {
+				tmp = EntiosPlayerA[j];
+				EntiosPlayerA[j] = EntiosPlayerA[j + 1];
+				EntiosPlayerA[j + 1] = tmp;
+			}
+		}
+	}
 }
 
 std::ifstream file;
@@ -35,3 +46,4 @@ void main() {
 		tecla = enti::getInputKey();
 	}
 }
+
