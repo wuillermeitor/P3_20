@@ -63,9 +63,9 @@ public:
 	vector getPos();
 	//Atributos
 	int acciones = 10;
+	int currentEntio = 0;
 private:
 	Map * CurrentMap;
-	int currentEntio = 0;
 };
 
 

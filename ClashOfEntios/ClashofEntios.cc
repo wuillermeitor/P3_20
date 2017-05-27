@@ -266,7 +266,6 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 	bool accionRealizada = false;
 	int oldRow = CurrentPlayer[currentEntio].CurrentRow;
 	int oldCol = CurrentPlayer[currentEntio].CurrentCol;
-
 	if(key!= enti::InputKey::ENTER)
 		CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
 
