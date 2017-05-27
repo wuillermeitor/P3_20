@@ -270,7 +270,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 	bool accionRealizada = false;
 
 	if (key != enti::InputKey::ENTER) {
-		if (CurrentPlayer[currentEntio].fatiga > 0) {
+		if (CurrentPlayer[currentEntio].fatiga != 0) {
 			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].nextPosition);
 		}
 		else {
@@ -289,32 +289,32 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		case enti::InputKey::W:
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentRow--;
-				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].fatiga++;
+				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
 			}
 			break;
 		case enti::InputKey::A:
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentCol--;
-				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].fatiga++;
+				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
 			}
 			break;
 		case enti::InputKey::S:
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentRow++;
-				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].fatiga++;
+				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
 			}
 			break;
 		case enti::InputKey::D:
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].CurrentCol++;
-				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].fatiga++;
+				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
 			}
 			break;

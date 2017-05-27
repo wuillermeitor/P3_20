@@ -31,6 +31,8 @@ struct Entio {
 	symbols nextPosition;
 	int CurrentRow;
 	int CurrentCol;
+	int OldRow;
+	int OldCol;
 	int vida = 10;
 	int fatiga = 0;
 	int flechas = 10;
