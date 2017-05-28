@@ -200,12 +200,26 @@ void Map::drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int curre
 	}
 }
 
-void Map::drawHUD(int acciones, symbols entio, enti::InputKey & key) {
+void Map::drawHUD(int acciones, symbols entio, enti::InputKey & key, bool attack, bool sword, bool bow) {
 	enti::cout << enti::endl;
 	enti::cout << enti::Color::YELLOW << "Remaining movements: " << enti::Color::LIGHTCYAN << acciones << enti::endl;
 	enti::cout << enti::Color::YELLOW << "Now moves character  " << enti::Color::LIGHTCYAN << static_cast<char>(entio) << enti::endl << enti::endl;
 	if (acciones == 0) {
 		enti::cout << enti::Color::LIGHTMAGENTA << "Press ENTER to end your turn!"<< enti::endl;
+	}
+
+	if (attack) {
+		enti::cout << enti::Color::YELLOW << "Enter the weapon you want to choose:"<< enti::endl;
+		enti::cout << enti::Color::YELLOW << "1 - SWORD"<< enti::endl;
+		enti::cout << enti::Color::YELLOW << "2 - BOW" << enti::endl;
+	}		
+	if (sword || bow) {
+		attack = false;
+		enti::cout << enti::Color::YELLOW << "Enter the direction to attack:" << enti::endl;
+		enti::cout << enti::Color::YELLOW << "1 - UP" << enti::endl;
+		enti::cout << enti::Color::YELLOW << "2 - LEFT" << enti::endl;
+		enti::cout << enti::Color::YELLOW << "3 - DOWN" << enti::endl;
+		enti::cout << enti::Color::YELLOW << "4 - RIGHT" << enti::endl;
 	}
 	enti::cout << enti::cend;
 }
@@ -312,10 +326,9 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 	}
 }
 
-bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer) {
+bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer) {
 	bool accionRealizada = false;
-
-	if (key != enti::InputKey::ENTER) {
+		if (key != enti::InputKey::ENTER) {
 		if (CurrentPlayer[currentEntio].fatiga != 0) {
 			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].nextPosition);
 		}
@@ -327,6 +340,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 	if (key != enti::InputKey::NONE && acciones > 0) {
 		if (key == enti::InputKey::ENTER) {
 			CurrentPlayer[currentEntio].fatiga++;
+			CurrentPlayer[currentEntio].hasmoved = false;
 			if (currentEntio + 1 > 5) { currentEntio = 0; }
 			else { currentEntio++; }
 			accionRealizada = true;
@@ -337,19 +351,26 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
 				CurrentPlayer[currentEntio].CurrentRow--;
 				CurrentPlayer[currentEntio].fatiga++;
+				CurrentPlayer[currentEntio].hasmoved = true;
 				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
+				attack = false;
+				sword = false;
+				bow = false;
 			}
 		}
-
 		else if (key == enti::InputKey::A || key == enti::InputKey::a) {
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::BOSQUE) {
 				CurrentPlayer[currentEntio].OldRow = CurrentPlayer[currentEntio].CurrentRow;
 				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
 				CurrentPlayer[currentEntio].CurrentCol--;
 				CurrentPlayer[currentEntio].fatiga++;
+				CurrentPlayer[currentEntio].hasmoved = true;
 				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
+				attack = false;
+				sword = false;
+				bow = false;
 			}
 		}
 		else if (key == enti::InputKey::S || key == enti::InputKey::s) {
@@ -358,8 +379,12 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
 				CurrentPlayer[currentEntio].CurrentRow++;
 				CurrentPlayer[currentEntio].fatiga++;
+				CurrentPlayer[currentEntio].hasmoved = true;
 				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
+				attack = false;
+				sword = false;
+				bow = false;
 			}
 		}
 		else if (key == enti::InputKey::D || key == enti::InputKey::d) {
@@ -368,19 +393,70 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
 				CurrentPlayer[currentEntio].CurrentCol++;
 				CurrentPlayer[currentEntio].fatiga++;
+				CurrentPlayer[currentEntio].hasmoved = true;
 				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
+				attack = false;
+				sword = false;
+				bow = false;
+			}
+		}	
+		else if (key == enti::InputKey::Z || key == enti::InputKey::z) {
+			if (attack == true || sword==true||bow==true){
+				attack = false;
+				sword = false;
+				bow = false;
+			}
+			else {
+				if (CurrentPlayer[currentEntio].hasmoved) {
+					if (CurrentPlayer[currentEntio].CurrentRow != CurrentPlayer[currentEntio].OldRow || CurrentPlayer[currentEntio].CurrentCol != CurrentPlayer[currentEntio].OldCol && CurrentPlayer[currentEntio].hasmoved) {
+						acciones++;
+					}
+					CurrentPlayer[currentEntio].CurrentRow = CurrentPlayer[currentEntio].OldRow;
+					CurrentPlayer[currentEntio].CurrentCol = CurrentPlayer[currentEntio].OldCol;
+				}
 			}
 		}
+		else if (key == enti::InputKey::SPACEBAR) {
+			attack = true;
+		}
+		
+		if (attack) {
+			if (key == enti::InputKey::NUM1) {
+				sword = true;
+				attack = false;
+				if (sword) {
+					enti::systemPause;
+					if (key == enti::InputKey::NUM1) {
+						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+							NextPlayer.erase(NextPlayer.begin()+0);
+							sword = false;
+						}
+						else {
+							enti::cout << "you failed!";
+							sword = false;
+						}
+					}
+					else if (key == enti::InputKey::NUM2) {
+
+					}
+					else if (key == enti::InputKey::NUM3) {
+
+					}
+					else if (key == enti::InputKey::NUM4) {
+
+					}
+				}
+			}
+			else if (key == enti::InputKey::NUM2) {
+				bow = true;
+				attack = false;
+			}
+		}
+		
 		if (accionRealizada) { acciones--; }
 	}
-	if (key == enti::InputKey::Z || key == enti::InputKey::z) {
-		if (CurrentPlayer[currentEntio].CurrentRow != CurrentPlayer[currentEntio].OldRow || CurrentPlayer[currentEntio].CurrentCol != CurrentPlayer[currentEntio].OldCol) {
-			acciones++;
-		}
-		CurrentPlayer[currentEntio].CurrentRow = CurrentPlayer[currentEntio].OldRow;
-		CurrentPlayer[currentEntio].CurrentCol = CurrentPlayer[currentEntio].OldCol;
-	}
+
 
 	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].caracter);
 

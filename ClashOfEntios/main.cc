@@ -55,7 +55,7 @@ void mainmenu(const enti::InputKey & key) {
 	enti::systemPause();
  }
 
-void main() {
+int main() {
 	enti::InputKey tecla;
 	mainmenu(tecla);
 
@@ -64,14 +64,17 @@ void main() {
 	CurrentPlayer = EntioPA;
 	NextPlayer = EntioPB;
 	while (true) {
-		if (player.PlayerMovement(tecla, CurrentPlayer)) {
-			ordenarPorFatiga(CurrentPlayer);
+		if (player.PlayerMovement(tecla, CurrentPlayer, NextPlayer)) {
+			//ordenarPorFatiga(CurrentPlayer);
 			swapPlayer(CurrentPlayer, NextPlayer);
 			player.player1torn = !player.player1torn;
 			player.currentEntio = 0;
 		}
 		map.drawMap(player.player1torn, CurrentPlayer, player.currentEntio);
-		map.drawHUD(player.acciones, CurrentPlayer[player.currentEntio].caracter, tecla);
+		map.drawHUD(player.acciones, CurrentPlayer[player.currentEntio].caracter, tecla, player.attack, player.sword, player.bow);
 		tecla = enti::getInputKey();
+		if (tecla == enti::InputKey::ESC) {
+			return 0;
+		}
 	}
 }

@@ -29,6 +29,7 @@ enum class symbols :char {
 struct Entio {
 	symbols caracter;
 	symbols nextPosition;
+	bool hasmoved = false;
 	int CurrentRow;
 	int CurrentCol;
 	int OldRow;
@@ -45,7 +46,7 @@ public:
 	//Métodos de la clase
 	void ReadMap(std::ifstream &file, std::string filename);//método que lee el mapa del archivo default.cfg
 	void drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int currentEntio);//método que dibujará el mapa en función de lo leído con el anterior método.
-	void drawHUD(int acciones, symbols entio, enti::InputKey & key);
+	void drawHUD(int acciones, symbols entio, enti::InputKey & key, bool attack, bool sword, bool bow);
 	symbols posicion(const vector & location);//Método que devuelve el símbolo de la posición indicada
 	void modificar(const vector & target, const symbols & value);//método que modifica una posición del mapa en función del struct vector.
 	void modificarPos(int & _row, int & _column, const symbols & value);//método que modifica una posición del mapa en función de dos parámetros.
@@ -64,13 +65,16 @@ class Player {
 public:
 	//Métodos
 	Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<Entio>&EntiosPlayerB);//constructor de la clase player.
-	bool PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer);//método que permite al jugador moverse, así como cambiar
+	bool PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer);//método que permite al jugador moverse, así como cambiar
 	//de entio y de jugador (en función de lo que devuelva el método).
 	vector getPos();
 	//Atributos
 	int acciones = 10;
 	int currentEntio = 0;
 	bool player1torn = true;
+	bool attack = false;
+	bool bow = false;
+	bool sword = false;
 private:
 	Map * CurrentMap;
 };
