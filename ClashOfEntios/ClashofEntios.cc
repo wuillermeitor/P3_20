@@ -198,6 +198,15 @@ void Map::drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int curre
 		}
 		enti::cout << enti::endl;
 	}
+}
+void Map::drawHUD(int acciones, bool playertorn) {
+	enti::cout << enti::endl;
+	enti::cout << enti::Color::YELLOW << "Remaining movements: " << enti::Color::LIGHTCYAN << acciones << enti::endl;
+	enti::cout << enti::Color::YELLOW << "Now moves character  ";
+	if (playertorn)
+		enti::cout << enti::Color::LIGHTMAGENTA << "A" << enti::endl;
+	else
+		enti::cout << enti::Color::LIGHTMAGENTA << "B" << enti::endl;
 	enti::cout << enti::cend;
 }
 
@@ -320,6 +329,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 			CurrentPlayer[currentEntio].fatiga++;
 			if (currentEntio + 1 > 5) { currentEntio = 0; }
 			else { currentEntio++; }
+			
 			accionRealizada = true;
 			break;
 		case enti::InputKey::W:
@@ -361,6 +371,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 	}
 		
 	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].caracter);
+
 
 	if (acciones == 0 && key == enti::InputKey::ENTER) {
 		acciones = 10;

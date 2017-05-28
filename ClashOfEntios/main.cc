@@ -1,7 +1,16 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "Renderer.hh"
 #include "ClashofEntios.hh"
+
+std::ifstream file;
+Map map;
+std::vector<Entio>EntioPA;
+std::vector<Entio>EntioPB;
+std::vector<Entio>CurrentPlayer;
+std::vector<Entio>NextPlayer;
+
 
 //Función que cambia de jugador en el bucle del juego.
 void swapPlayer(std::vector<Entio>&Player1, std::vector<Entio>&Player2) {
@@ -24,28 +33,22 @@ void ordenarPorFatiga(std::vector<Entio>&Entios) {
 	}
 }
 
-std::ifstream file;
-Map map;
-bool player1torn = true;
-std::vector<Entio>EntioPA;
-std::vector<Entio>EntioPB;
-std::vector<Entio>CurrentPlayer;
-std::vector<Entio>NextPlayer;
+
 void main() {
 	map.ReadMap(file, "default.cfg");
 	Player player(&map, EntioPA, EntioPB);
-	map.drawMap(player1torn, EntioPA, player.currentEntio);
 	CurrentPlayer = EntioPA;
 	NextPlayer = EntioPB;
 	enti::InputKey tecla;
 	while (true) {
-		map.drawMap(player1torn, CurrentPlayer, player.currentEntio);
 		if (player.PlayerMovement(tecla, CurrentPlayer)) {
 			ordenarPorFatiga(CurrentPlayer);
 			swapPlayer(CurrentPlayer, NextPlayer);
-			player1torn = !player1torn;
+			player.player1torn = !player.player1torn;
 			player.currentEntio = 0;
 		}
+		map.drawMap(player.player1torn, CurrentPlayer, player.currentEntio);
+		map.drawHUD(player.acciones, player.player1torn);
 		tecla = enti::getInputKey();
 	}
 }
