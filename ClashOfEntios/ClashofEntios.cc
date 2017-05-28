@@ -75,7 +75,7 @@ void Map::ReadMap(std::ifstream &file, std::string filename) {
 	file.close();//Finalmente, se cierra el archivo.
 }
 
-void Map::drawMap(bool _player1Torn) {
+void Map::drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int currentEntio) {
 	//Dos variables que servirán para pintar a los entios del jugador actual de color amarillo.
 	enti::Color playerA;
 	enti::Color playerB;
@@ -111,52 +111,88 @@ void Map::drawMap(bool _player1Torn) {
 			}
 
 			else if (infoMap[i][j] == symbols::ENTIOA) {
-				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIOA)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerA << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::ENTIOB) {
-				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIOB)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerA << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::ENTIOC) {
-				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIOC)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerA << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::ENTIOD) {
-				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIOD)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerA << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::ENTIOE) {
-				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIOE)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerA << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::ENTIOF) {
-				enti::cout << playerA << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIOF)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerA << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 
 			else if (infoMap[i][j] == symbols::ENTIO1) {
-				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIO1)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerB << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::ENTIO2) {
-				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIO2)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerB << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::ENTIO3) {
-				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIO3)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerB << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::ENTIO4) {
-				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIO4)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerB << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::ENTIO5) {
-				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIO5)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerB << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::ENTIO6) {
-				enti::cout << playerB << static_cast<char>(infoMap[i][j]);
+				if (CurrentPlayer[currentEntio].caracter == symbols::ENTIO6)
+					enti::cout << enti::Color::LIGHTMAGENTA << static_cast<char>(infoMap[i][j]);
+				else
+					enti::cout << playerB << static_cast<char>(infoMap[i][j]);
 				enti::cout << " ";
 			}
 		}

@@ -44,7 +44,7 @@ class Map {
 public:
 	//Métodos de la clase
 	void ReadMap(std::ifstream &file, std::string filename);//método que lee el mapa del archivo default.cfg
-	void drawMap(bool _player1Torn);//método que dibujará el mapa en función de lo leído con el anterior método.
+	void drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int currentEntio);//método que dibujará el mapa en función de lo leído con el anterior método.
 	symbols posicion(const vector & location);//Método que devuelve el símbolo de la posición indicada
 	void modificar(const vector & target, const symbols & value);//método que modifica una posición del mapa en función del struct vector.
 	void modificarPos(int & _row, int & _column, const symbols & value);//método que modifica una posición del mapa en función de dos parámetros.

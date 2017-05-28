@@ -33,13 +33,13 @@ std::vector<Entio>CurrentPlayer;
 std::vector<Entio>NextPlayer;
 void main() {
 	map.ReadMap(file, "default.cfg");
-	map.drawMap(player1torn);
 	Player player(&map, EntioPA, EntioPB);
+	map.drawMap(player1torn, EntioPA, player.currentEntio);
 	CurrentPlayer = EntioPA;
 	NextPlayer = EntioPB;
 	enti::InputKey tecla;
 	while (true) {
-		map.drawMap(player1torn);
+		map.drawMap(player1torn, CurrentPlayer, player.currentEntio);
 		if (player.PlayerMovement(tecla, CurrentPlayer)) {
 			ordenarPorFatiga(CurrentPlayer);
 			swapPlayer(CurrentPlayer, NextPlayer);
