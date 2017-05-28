@@ -93,9 +93,9 @@ void Map::drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int curre
 	//Bucles for anidados que recorrerán el mapa e irán imprimiéndolo en función de lo encontrado.
 	for (int i = 0; i < dimensiones.filas; i++) {
 		for (int j = 0; j < dimensiones.columnas; j++) {
-			if (infoMap[i][j] == symbols::MONTAÑA) {
-				enti::cout << enti::Color::LIGHTRED << static_cast<char>(infoMap[i][j]);
-				enti::cout << " ";
+			if (infoMap[i][j] == symbols::MONTAÑA && j < dimensiones.columnas-1) {
+					enti::cout << enti::Color::LIGHTRED << static_cast<char>(infoMap[i][j]);
+					enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::AGUA) {
 				enti::cout << enti::Color::LIGHTCYAN << static_cast<char>(infoMap[i][j]);
@@ -199,14 +199,14 @@ void Map::drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int curre
 		enti::cout << enti::endl;
 	}
 }
-void Map::drawHUD(int acciones, bool playertorn) {
+
+void Map::drawHUD(int acciones, symbols entio, enti::InputKey & key) {
 	enti::cout << enti::endl;
 	enti::cout << enti::Color::YELLOW << "Remaining movements: " << enti::Color::LIGHTCYAN << acciones << enti::endl;
-	enti::cout << enti::Color::YELLOW << "Now moves character  ";
-	if (playertorn)
-		enti::cout << enti::Color::LIGHTMAGENTA << "A" << enti::endl;
-	else
-		enti::cout << enti::Color::LIGHTMAGENTA << "B" << enti::endl;
+	enti::cout << enti::Color::YELLOW << "Now moves character  " << enti::Color::LIGHTCYAN << static_cast<char>(entio) << enti::endl << enti::endl;
+	if (acciones == 0) {
+		enti::cout << enti::Color::LIGHTMAGENTA << "Press ENTER to end your turn!"<< enti::endl;
+	}
 	enti::cout << enti::cend;
 }
 
@@ -228,6 +228,7 @@ symbols Map::guardarCaracter(int & _row, int & _column) {
 
 Map::~Map() {
 }
+
 
 //CLASE PLAYER
 Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<Entio>&EntiosPlayerB) {
@@ -324,52 +325,63 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 	}
 
 	if (key != enti::InputKey::NONE && acciones > 0) {
-		switch (key) {
-		case enti::InputKey::ENTER:
+		if (key == enti::InputKey::ENTER) {
 			CurrentPlayer[currentEntio].fatiga++;
 			if (currentEntio + 1 > 5) { currentEntio = 0; }
 			else { currentEntio++; }
-			
 			accionRealizada = true;
-			break;
-		case enti::InputKey::W:
+		}
+		else if (key == enti::InputKey::W || key == enti::InputKey::w) {
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::BOSQUE) {
+				CurrentPlayer[currentEntio].OldRow = CurrentPlayer[currentEntio].CurrentRow;
+				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
 				CurrentPlayer[currentEntio].CurrentRow--;
 				CurrentPlayer[currentEntio].fatiga++;
 				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
 			}
-			break;
-		case enti::InputKey::A:
+		}
+
+		else if (key == enti::InputKey::A || key == enti::InputKey::a) {
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::BOSQUE) {
+				CurrentPlayer[currentEntio].OldRow = CurrentPlayer[currentEntio].CurrentRow;
+				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
 				CurrentPlayer[currentEntio].CurrentCol--;
 				CurrentPlayer[currentEntio].fatiga++;
 				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
 			}
-			break;
-		case enti::InputKey::S:
+		}
+		else if (key == enti::InputKey::S || key == enti::InputKey::s) {
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::BOSQUE) {
+				CurrentPlayer[currentEntio].OldRow = CurrentPlayer[currentEntio].CurrentRow;
+				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
 				CurrentPlayer[currentEntio].CurrentRow++;
 				CurrentPlayer[currentEntio].fatiga++;
 				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
 			}
-			break;
-		case enti::InputKey::D:
+		}
+		else if (key == enti::InputKey::D || key == enti::InputKey::d) {
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == symbols::BOSQUE) {
+				CurrentPlayer[currentEntio].OldRow = CurrentPlayer[currentEntio].CurrentRow;
+				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
 				CurrentPlayer[currentEntio].CurrentCol++;
 				CurrentPlayer[currentEntio].fatiga++;
 				CurrentPlayer[currentEntio].nextPosition = CurrentMap->guardarCaracter(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol);
 				accionRealizada = true;
 			}
-			break;
-		default:
-			break;
 		}
 		if (accionRealizada) { acciones--; }
 	}
-		
+	if (key == enti::InputKey::Z || key == enti::InputKey::z) {
+		if (CurrentPlayer[currentEntio].CurrentRow != CurrentPlayer[currentEntio].OldRow || CurrentPlayer[currentEntio].CurrentCol != CurrentPlayer[currentEntio].OldCol) {
+			acciones++;
+		}
+		CurrentPlayer[currentEntio].CurrentRow = CurrentPlayer[currentEntio].OldRow;
+		CurrentPlayer[currentEntio].CurrentCol = CurrentPlayer[currentEntio].OldCol;
+	}
+
 	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].caracter);
 
 
