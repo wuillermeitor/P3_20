@@ -87,10 +87,10 @@ void Map::drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int curre
 	//Condición que comprueba cual es el jugador actual y le asigna a cada uno un color.
 	if (_player1Torn) {
 		playerA = enti::Color::YELLOW;
-		playerB = enti::Color::WHITE;
+		playerB = enti::Color::LIGHTGRAY;
 	}
 	else {
-		playerA = enti::Color::WHITE;
+		playerA = enti::Color::LIGHTGRAY;
 		playerB = enti::Color::YELLOW;
 	}
 
@@ -407,8 +407,22 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 	if (key != enti::InputKey::NONE && acciones > 0) {
 		if (key == enti::InputKey::ENTER) {
 			CurrentPlayer[currentEntio].fatiga++;
-			if (currentEntio + 1 > 5) { currentEntio = 0; }
-			else { currentEntio++; }
+			if (currentEntio + 1 == CurrentPlayer.size()) {
+				std::vector<Entio> tmp;
+				for (int i = 1; i < CurrentPlayer.size(); i++) {
+					for (int j = 0; j < CurrentPlayer.size() - 1; j++) {
+						if (CurrentPlayer[j].fatiga > CurrentPlayer[j + 1].fatiga) {
+							tmp.push_back(CurrentPlayer[j]);
+							CurrentPlayer[j] = CurrentPlayer[j + 1];
+							CurrentPlayer[j + 1] = tmp.back();
+						}
+					}
+				}
+				currentEntio = 0;
+			}
+			else{
+				currentEntio++;
+			}
 			accionRealizada = true;
 		}
 		else if (key == enti::InputKey::W || key == enti::InputKey::w) {
@@ -497,7 +511,6 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				attack = false;
 			}
 		}
-
 		if (bow) {
 			if (key == enti::InputKey::NUM1) {
 				for (int i = 1; i < 10; i++) {
@@ -531,16 +544,13 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 			} //Replicar esto por cada direccion possible
 		}
 			else if (key == enti::InputKey::NUM2) {
-				for (int i=1; i< 10; i++){
+				for (int i = 1; i < 10; i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
 						NextPlayer.erase(NextPlayer.begin() + 0);
 					}
-					
-			
-	}
-
-
-
+				}
+			}		
+		}
 		if (sword) {
 			if (key == enti::InputKey::NUM1) {
 				if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
@@ -575,6 +585,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				}
 			}
 		}
+
 
 		if (accionRealizada) { acciones--; }
 	}
