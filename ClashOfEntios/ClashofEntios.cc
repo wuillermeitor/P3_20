@@ -407,7 +407,6 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 	if (key != enti::InputKey::NONE && acciones > 0) {
 		if (key == enti::InputKey::ENTER) {
 			CurrentPlayer[currentEntio].fatiga++;
-			if (currentEntio + 1 == CurrentPlayer.size()) {
 				std::vector<Entio> tmp;
 				for (int i = 1; i < CurrentPlayer.size(); i++) {
 					for (int j = 0; j < CurrentPlayer.size() - 1; j++) {
@@ -419,10 +418,6 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 					}
 				}
 				currentEntio = 0;
-			}
-			else{
-				currentEntio++;
-			}
 			accionRealizada = true;
 		}
 		else if (key == enti::InputKey::W || key == enti::InputKey::w) {
