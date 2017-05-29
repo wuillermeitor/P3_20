@@ -4,7 +4,7 @@
 #include "Input.inl.hh"
 #include <conio.h>
 #include <vector>
-#include <queue>
+#include <stack>
 
 //struct de las coordenadas del mapa.
 struct vector {
@@ -32,11 +32,11 @@ struct Entio {
 	bool hasmoved = false;
 	int CurrentRow;
 	int CurrentCol;
-	int OldRow;
-	int OldCol;
 	int vida = 10;
 	int fatiga = 0;
 	int flechas = 10;
+	std::stack<int>lastRow;
+	std::stack<int>lastCol;
 };
 
 

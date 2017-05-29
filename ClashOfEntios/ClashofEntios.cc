@@ -254,36 +254,48 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerA[0].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[0].CurrentRow = i;
 				EntiosPlayerA[0].CurrentCol = j;
+				EntiosPlayerA[0].lastRow.push(0);
+				EntiosPlayerA[0].lastCol.push(0);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOB) {
 				EntiosPlayerA.push_back(Entio());
 				EntiosPlayerA[1].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[1].CurrentRow = i;
 				EntiosPlayerA[1].CurrentCol = j;
+				EntiosPlayerA[1].lastRow.push(0);
+				EntiosPlayerA[1].lastCol.push(0);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOC) {
 				EntiosPlayerA.push_back(Entio());
 				EntiosPlayerA[2].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[2].CurrentRow = i;
 				EntiosPlayerA[2].CurrentCol = j;
+				EntiosPlayerA[2].lastRow.push(0);
+				EntiosPlayerA[2].lastCol.push(0);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOD) {
 				EntiosPlayerA.push_back(Entio());
 				EntiosPlayerA[3].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[3].CurrentRow = i;
 				EntiosPlayerA[3].CurrentCol = j;
+				EntiosPlayerA[3].lastRow.push(0);
+				EntiosPlayerA[3].lastCol.push(0);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOE) {
 				EntiosPlayerA.push_back(Entio());
 				EntiosPlayerA[4].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[4].CurrentRow = i;
 				EntiosPlayerA[4].CurrentCol = j;
+				EntiosPlayerA[4].lastRow.push(0);
+				EntiosPlayerA[4].lastCol.push(0);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOF) {
 				EntiosPlayerA.push_back(Entio());
 				EntiosPlayerA[5].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[5].CurrentRow = i;
 				EntiosPlayerA[5].CurrentCol = j;
+				EntiosPlayerA[5].lastRow.push(0);
+				EntiosPlayerA[5].lastCol.push(0);
 			}
 
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO1) {
@@ -291,36 +303,48 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerB[0].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[0].CurrentRow = i;
 				EntiosPlayerB[0].CurrentCol = j;
+				EntiosPlayerA[0].lastRow.push(0);
+				EntiosPlayerA[0].lastCol.push(0);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO2) {
 				EntiosPlayerB.push_back(Entio());
 				EntiosPlayerB[1].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[1].CurrentRow = i;
 				EntiosPlayerB[1].CurrentCol = j;
+				EntiosPlayerA[1].lastRow.push(0);
+				EntiosPlayerA[1].lastCol.push(0);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO3) {
 				EntiosPlayerB.push_back(Entio());
 				EntiosPlayerB[2].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[2].CurrentRow = i;
 				EntiosPlayerB[2].CurrentCol = j;
+				EntiosPlayerA[2].lastRow.push(0);
+				EntiosPlayerA[2].lastCol.push(0);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO4) {
 				EntiosPlayerB.push_back(Entio());
 				EntiosPlayerB[3].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[3].CurrentRow = i;
 				EntiosPlayerB[3].CurrentCol = j;
+				EntiosPlayerA[3].lastRow.push(0);
+				EntiosPlayerA[3].lastCol.push(0);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO5) {
 				EntiosPlayerB.push_back(Entio());
 				EntiosPlayerB[4].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[4].CurrentRow = i;
 				EntiosPlayerB[4].CurrentCol = j;
+				EntiosPlayerA[4].lastRow.push(0);
+				EntiosPlayerA[4].lastCol.push(0);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO6) {
 				EntiosPlayerB.push_back(Entio());
 				EntiosPlayerB[5].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[5].CurrentRow = i;
 				EntiosPlayerB[5].CurrentCol = j;
+				EntiosPlayerA[4].lastRow.push(0);
+				EntiosPlayerA[4].lastCol.push(0);
 			}
 		}
 	}
@@ -328,7 +352,7 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 
 bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer) {
 	bool accionRealizada = false;
-		if (key != enti::InputKey::ENTER) {
+	if (key != enti::InputKey::ENTER) {
 		if (CurrentPlayer[currentEntio].fatiga != 0) {
 			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].nextPosition);
 		}
@@ -336,19 +360,17 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
 		}
 	}
-
 	if (key != enti::InputKey::NONE && acciones > 0) {
 		if (key == enti::InputKey::ENTER) {
 			CurrentPlayer[currentEntio].fatiga++;
-			CurrentPlayer[currentEntio].hasmoved = false;
 			if (currentEntio + 1 > 5) { currentEntio = 0; }
 			else { currentEntio++; }
 			accionRealizada = true;
 		}
 		else if (key == enti::InputKey::W || key == enti::InputKey::w) {
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::BOSQUE) {
-				CurrentPlayer[currentEntio].OldRow = CurrentPlayer[currentEntio].CurrentRow;
-				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
+				CurrentPlayer[currentEntio].lastRow.push(CurrentPlayer[currentEntio].CurrentRow);
+				CurrentPlayer[currentEntio].lastCol.push(CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].CurrentRow--;
 				CurrentPlayer[currentEntio].fatiga++;
 				CurrentPlayer[currentEntio].hasmoved = true;
@@ -361,8 +383,8 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		}
 		else if (key == enti::InputKey::A || key == enti::InputKey::a) {
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == symbols::BOSQUE) {
-				CurrentPlayer[currentEntio].OldRow = CurrentPlayer[currentEntio].CurrentRow;
-				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
+				CurrentPlayer[currentEntio].lastRow.push(CurrentPlayer[currentEntio].CurrentRow);
+				CurrentPlayer[currentEntio].lastCol.push(CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].CurrentCol--;
 				CurrentPlayer[currentEntio].fatiga++;
 				CurrentPlayer[currentEntio].hasmoved = true;
@@ -375,8 +397,8 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		}
 		else if (key == enti::InputKey::S || key == enti::InputKey::s) {
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == symbols::BOSQUE) {
-				CurrentPlayer[currentEntio].OldRow = CurrentPlayer[currentEntio].CurrentRow;
-				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
+				CurrentPlayer[currentEntio].lastRow.push(CurrentPlayer[currentEntio].CurrentRow);
+				CurrentPlayer[currentEntio].lastCol.push(CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].CurrentRow++;
 				CurrentPlayer[currentEntio].fatiga++;
 				CurrentPlayer[currentEntio].hasmoved = true;
@@ -389,8 +411,8 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		}
 		else if (key == enti::InputKey::D || key == enti::InputKey::d) {
 			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == symbols::TIERRA || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == symbols::BOSQUE) {
-				CurrentPlayer[currentEntio].OldRow = CurrentPlayer[currentEntio].CurrentRow;
-				CurrentPlayer[currentEntio].OldCol = CurrentPlayer[currentEntio].CurrentCol;
+				CurrentPlayer[currentEntio].lastRow.push(CurrentPlayer[currentEntio].CurrentRow);
+				CurrentPlayer[currentEntio].lastCol.push(CurrentPlayer[currentEntio].CurrentCol);
 				CurrentPlayer[currentEntio].CurrentCol++;
 				CurrentPlayer[currentEntio].fatiga++;
 				CurrentPlayer[currentEntio].hasmoved = true;
@@ -402,25 +424,25 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 			}
 		}	
 		else if (key == enti::InputKey::Z || key == enti::InputKey::z) {
-			if (attack == true || sword==true||bow==true){
+			if (attack == true || sword == true || bow == true) {
 				attack = false;
 				sword = false;
 				bow = false;
 			}
-			else {
-				if (CurrentPlayer[currentEntio].hasmoved) {
-					if (CurrentPlayer[currentEntio].CurrentRow != CurrentPlayer[currentEntio].OldRow || CurrentPlayer[currentEntio].CurrentCol != CurrentPlayer[currentEntio].OldCol && CurrentPlayer[currentEntio].hasmoved) {
-						acciones++;
-					}
-					CurrentPlayer[currentEntio].CurrentRow = CurrentPlayer[currentEntio].OldRow;
-					CurrentPlayer[currentEntio].CurrentCol = CurrentPlayer[currentEntio].OldCol;
+			else if (CurrentPlayer[currentEntio].lastRow.size() > 0 && CurrentPlayer[currentEntio].lastCol.size() > 0) {
+				if (CurrentPlayer[currentEntio].CurrentRow != CurrentPlayer[currentEntio].lastRow.top() || CurrentPlayer[currentEntio].CurrentCol != CurrentPlayer[currentEntio].lastCol.top()) {
+					CurrentPlayer[currentEntio].CurrentRow = CurrentPlayer[currentEntio].lastRow.top();
+					CurrentPlayer[currentEntio].CurrentCol = CurrentPlayer[currentEntio].lastCol.top();
+					CurrentPlayer[currentEntio].lastCol.pop();
+					CurrentPlayer[currentEntio].lastRow.pop();
+					CurrentPlayer[currentEntio].fatiga--;
+					acciones++;
 				}
 			}
 		}
 		else if (key == enti::InputKey::SPACEBAR) {
 			attack = true;
 		}
-		
 		if (attack) {
 			if (key == enti::InputKey::NUM1) {
 				sword = true;
@@ -453,7 +475,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				attack = false;
 			}
 		}
-		
+
 		if (accionRealizada) { acciones--; }
 	}
 
