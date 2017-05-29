@@ -32,6 +32,8 @@ struct Entio {
 	bool hasmoved = false;
 	int CurrentRow;
 	int CurrentCol;
+	int originRow;
+	int originCol;
 	int vida = 10;
 	int fatiga = 0;
 	int flechas = 10;

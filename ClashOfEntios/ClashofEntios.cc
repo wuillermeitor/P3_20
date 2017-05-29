@@ -254,6 +254,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerA[0].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[0].CurrentRow = i;
 				EntiosPlayerA[0].CurrentCol = j;
+				EntiosPlayerA[0].originRow = i;
+				EntiosPlayerA[0].originCol = j;
 				EntiosPlayerA[0].lastRow.push(EntiosPlayerA[0].CurrentRow);
 				EntiosPlayerA[0].lastCol.push(EntiosPlayerA[0].CurrentCol);
 			}
@@ -262,6 +264,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerA[1].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[1].CurrentRow = i;
 				EntiosPlayerA[1].CurrentCol = j;
+				EntiosPlayerA[1].originRow = i;
+				EntiosPlayerA[1].originCol = j;
 				EntiosPlayerA[1].lastRow.push(EntiosPlayerA[1].CurrentRow);
 				EntiosPlayerA[1].lastCol.push(EntiosPlayerA[1].CurrentCol);
 			}
@@ -270,6 +274,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerA[2].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[2].CurrentRow = i;
 				EntiosPlayerA[2].CurrentCol = j;
+				EntiosPlayerA[2].originRow = i;
+				EntiosPlayerA[2].originCol = j;
 				EntiosPlayerA[2].lastRow.push(EntiosPlayerA[2].CurrentRow);
 				EntiosPlayerA[2].lastCol.push(EntiosPlayerA[2].CurrentCol);
 			}
@@ -278,6 +284,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerA[3].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[3].CurrentRow = i;
 				EntiosPlayerA[3].CurrentCol = j;
+				EntiosPlayerA[3].originRow = i;
+				EntiosPlayerA[3].originCol = j;
 				EntiosPlayerA[3].lastRow.push(EntiosPlayerA[3].CurrentRow);
 				EntiosPlayerA[3].lastCol.push(EntiosPlayerA[3].CurrentCol);
 			}
@@ -286,6 +294,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerA[4].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[4].CurrentRow = i;
 				EntiosPlayerA[4].CurrentCol = j;
+				EntiosPlayerA[4].originRow = i;
+				EntiosPlayerA[4].originCol = j;
 				EntiosPlayerA[4].lastRow.push(EntiosPlayerA[4].CurrentRow);
 				EntiosPlayerA[4].lastCol.push(EntiosPlayerA[4].CurrentCol);
 			}
@@ -294,6 +304,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerA[5].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[5].CurrentRow = i;
 				EntiosPlayerA[5].CurrentCol = j;
+				EntiosPlayerA[5].originRow = i;
+				EntiosPlayerA[5].originCol = j;
 				EntiosPlayerA[5].lastRow.push(EntiosPlayerA[5].CurrentRow);
 				EntiosPlayerA[5].lastCol.push(EntiosPlayerA[5].CurrentCol);
 			}
@@ -303,6 +315,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerB[0].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[0].CurrentRow = i;
 				EntiosPlayerB[0].CurrentCol = j;
+				EntiosPlayerB[0].originRow = i;
+				EntiosPlayerB[0].originCol = j;
 				EntiosPlayerA[0].lastRow.push(EntiosPlayerA[0].CurrentRow);
 				EntiosPlayerA[0].lastCol.push(EntiosPlayerA[0].CurrentCol);
 			}
@@ -311,6 +325,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerB[1].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[1].CurrentRow = i;
 				EntiosPlayerB[1].CurrentCol = j;
+				EntiosPlayerB[1].originRow = i;
+				EntiosPlayerB[1].originCol = j;
 				EntiosPlayerA[1].lastRow.push(EntiosPlayerA[1].CurrentRow);
 				EntiosPlayerA[1].lastCol.push(EntiosPlayerA[1].CurrentCol);
 			}
@@ -319,6 +335,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerB[2].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[2].CurrentRow = i;
 				EntiosPlayerB[2].CurrentCol = j;
+				EntiosPlayerB[2].originRow = i;
+				EntiosPlayerB[2].originCol = j;
 				EntiosPlayerA[2].lastRow.push(EntiosPlayerA[2].CurrentRow);
 				EntiosPlayerA[2].lastCol.push(EntiosPlayerA[2].CurrentCol);
 			}
@@ -327,6 +345,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerB[3].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[3].CurrentRow = i;
 				EntiosPlayerB[3].CurrentCol = j;
+				EntiosPlayerB[3].originRow = i;
+				EntiosPlayerB[3].originCol = j;
 				EntiosPlayerA[3].lastRow.push(EntiosPlayerA[3].CurrentRow);
 				EntiosPlayerA[3].lastCol.push(EntiosPlayerA[3].CurrentCol);
 			}
@@ -335,6 +355,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerB[4].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[4].CurrentRow = i;
 				EntiosPlayerB[4].CurrentCol = j;
+				EntiosPlayerB[4].originRow = i;
+				EntiosPlayerB[4].originCol = j;
 				EntiosPlayerA[4].lastRow.push(EntiosPlayerA[4].CurrentRow);
 				EntiosPlayerA[4].lastCol.push(EntiosPlayerA[4].CurrentCol);
 			}
@@ -343,6 +365,8 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerB[5].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[5].CurrentRow = i;
 				EntiosPlayerB[5].CurrentCol = j;
+				EntiosPlayerB[5].originRow = i;
+				EntiosPlayerB[5].originCol = j;
 				EntiosPlayerA[5].lastRow.push(EntiosPlayerA[5].CurrentRow);
 				EntiosPlayerA[5].lastCol.push(EntiosPlayerA[5].CurrentCol);
 			}
@@ -353,11 +377,11 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer) {
 	bool accionRealizada = false;
 	if (key != enti::InputKey::ENTER) {
-		if (CurrentPlayer[currentEntio].fatiga != 0) {
-			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].nextPosition);
+		if (CurrentPlayer[currentEntio].CurrentRow == CurrentPlayer[currentEntio].originRow && CurrentPlayer[currentEntio].CurrentCol == CurrentPlayer[currentEntio].originCol) {
+			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
 		}
 		else {
-			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
+			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].nextPosition);
 		}
 	}
 	if (key != enti::InputKey::NONE && acciones > 0) {
@@ -429,14 +453,12 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				sword = false;
 				bow = false;
 			}
-			else if (CurrentPlayer[currentEntio].lastRow.size() >= 0 && CurrentPlayer[currentEntio].lastCol.size() >= 0) {
+			else if (CurrentPlayer[currentEntio].lastRow.size() > 0 && CurrentPlayer[currentEntio].lastCol.size() > 0) {
 				if (CurrentPlayer[currentEntio].CurrentRow != CurrentPlayer[currentEntio].lastRow.top() || CurrentPlayer[currentEntio].CurrentCol != CurrentPlayer[currentEntio].lastCol.top()) {
 					CurrentPlayer[currentEntio].CurrentRow = CurrentPlayer[currentEntio].lastRow.top();
 					CurrentPlayer[currentEntio].CurrentCol = CurrentPlayer[currentEntio].lastCol.top();
-					if (CurrentPlayer[currentEntio].lastRow.size() != 0 && CurrentPlayer[currentEntio].lastCol.size() != 0) {
 						CurrentPlayer[currentEntio].lastCol.pop();
 						CurrentPlayer[currentEntio].lastRow.pop();
-					}
 					CurrentPlayer[currentEntio].fatiga--;
 					acciones++;
 				}
