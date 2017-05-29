@@ -4,6 +4,10 @@
 #include "ClashofEntios.hh"
 #include "Renderer.hh"
 
+int casillas;
+int vidaquitada;
+
+
 //CLASE MAPA
 void Map::ReadMap(std::ifstream &file, std::string filename) {
 	file.open(filename);//abre el fichero al que queremos acceder.
@@ -374,6 +378,21 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 	}
 }
 
+int Player::arco( int casillas) {
+	switch (casillas) {
+	case 10: vidaquitada = 1;
+	case 9: vidaquitada = 2;
+	case 8: vidaquitada = 3;
+	case 7: vidaquitada = 4;
+	case 6: vidaquitada = 5;
+	case 5: vidaquitada = 6;
+	case 4: vidaquitada = 7;
+	case 3: vidaquitada = 8;
+	case 2: vidaquitada = 9;
+	case 1: vidaquitada = 10;
+	}
+	return vidaquitada;
+}
 
 bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer) {
 	bool accionRealizada = false;
@@ -478,6 +497,32 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				attack = false;
 			}
 		}
+
+		if (bow) {
+			if (key == enti::InputKey::NUM1) {
+				for (int i = 1; i < 10; i++) {
+					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
+						NextPlayer[0].vida - arco(i) ;
+					}
+					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
+						NextPlayer[2].vida - arco(i);
+					}
+					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
+						NextPlayer[3].vida - arco(i);
+					}
+					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
+						NextPlayer[4].vida - arco(i);
+					}
+					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
+						NextPlayer[5].vida -  arco(i);
+					}
+
+				
+			}
+		}
+
+
+
 		if (sword) {
 			if (key == enti::InputKey::NUM1) {
 				if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {

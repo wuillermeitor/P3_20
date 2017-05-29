@@ -77,6 +77,7 @@ public:
 	bool attack = false;
 	bool bow = false;
 	bool sword = false;
-private:
+	private:
+	int arco(int casillas);
 	Map * CurrentMap;
 };
