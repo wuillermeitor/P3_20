@@ -56,7 +56,7 @@ void mainmenu(const enti::InputKey & key) {
 	enti::systemPause();
  }
 
-//Función que vacía el stackd e cada entio al final de turno.
+//Función que vacía el stack de cada entio al final de turno.
 void vaciarStack(std::vector<Entio>&Entios) {
 	for (int i = 0; i < Entios.size(); i++) {
 		while (Entios[i].lastRow.size() > 0 && Entios[i].lastCol.size() > 0) {
@@ -76,7 +76,7 @@ int main() {
 	while (true) {
 		if (player.PlayerMovement(tecla, CurrentPlayer, NextPlayer)) {
 			vaciarStack(CurrentPlayer);
-			//ordenarPorFatiga(CurrentPlayer);
+			ordenarPorFatiga(CurrentPlayer);
 			swapPlayer(CurrentPlayer, NextPlayer);
 			player.player1torn = !player.player1torn;
 			player.currentEntio = 0;

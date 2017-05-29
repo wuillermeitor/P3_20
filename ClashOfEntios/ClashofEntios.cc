@@ -374,6 +374,7 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 	}
 }
 
+
 bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer) {
 	bool accionRealizada = false;
 	if (key != enti::InputKey::ENTER) {
