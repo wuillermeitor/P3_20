@@ -396,6 +396,8 @@ int Player::arco( int casillas) {
 
 bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer) {
 	bool accionRealizada = false;
+	std::vector<Entio> tmp;
+
 	if (key != enti::InputKey::ENTER) {
 		if (CurrentPlayer[currentEntio].CurrentRow == CurrentPlayer[currentEntio].originRow && CurrentPlayer[currentEntio].CurrentCol == CurrentPlayer[currentEntio].originCol) {
 			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
@@ -407,17 +409,26 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 	if (key != enti::InputKey::NONE && acciones > 0) {
 		if (key == enti::InputKey::ENTER) {
 			CurrentPlayer[currentEntio].fatiga++;
-				std::vector<Entio> tmp;
-				for (int i = 1; i < CurrentPlayer.size(); i++) {
-					for (int j = 0; j < CurrentPlayer.size() - 1; j++) {
-						if (CurrentPlayer[j].fatiga > CurrentPlayer[j + 1].fatiga) {
-							tmp.push_back(CurrentPlayer[j]);
-							CurrentPlayer[j] = CurrentPlayer[j + 1];
-							CurrentPlayer[j + 1] = tmp.back();
+			if (currentEntio + 1 < CurrentPlayer.size()) {
+				if (CurrentPlayer[currentEntio + 1].fatiga > CurrentPlayer[currentEntio].fatiga) {
+					for (int i = 1; i < CurrentPlayer.size(); i++) {
+						for (int j = 0; j < CurrentPlayer.size() - 1; j++) {
+							if (CurrentPlayer[j].fatiga > CurrentPlayer[j + 1].fatiga) {
+								tmp.push_back(CurrentPlayer[j]);
+								CurrentPlayer[j] = CurrentPlayer[j + 1];
+								CurrentPlayer[j + 1] = tmp.back();
+							}
 						}
 					}
+					currentEntio = 0;
 				}
+				else {
+					currentEntio++;
+				}
+			}
+			else {
 				currentEntio = 0;
+			}
 			accionRealizada = true;
 		}
 		else if (key == enti::InputKey::W || key == enti::InputKey::w) {
