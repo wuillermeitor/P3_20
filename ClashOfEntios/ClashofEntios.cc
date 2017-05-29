@@ -502,24 +502,42 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 			if (key == enti::InputKey::NUM1) {
 				for (int i = 1; i < 10; i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
-						NextPlayer[0].vida - arco(i) ;
+						NextPlayer[0].vida - arco(i);
+						break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
+					}
+					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[1].caracter)) {
+						NextPlayer[1].vida - arco(i);
+						break;
 					}
 					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
 						NextPlayer[2].vida - arco(i);
+						break;
 					}
 					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
 						NextPlayer[3].vida - arco(i);
+						break;
 					}
 					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
 						NextPlayer[4].vida - arco(i);
+						break;
 					}
 					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
-						NextPlayer[5].vida -  arco(i);
+						NextPlayer[5].vida - arco(i);
+						break;
 					}
-
-				
-			}
+					else {
+						enti::cout << "you failed!";
+					}
+			} //Replicar esto por cada direccion possible
 		}
+			else if (key == enti::InputKey::NUM2) {
+				for (int i=1; i< 10; i++){
+					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+						NextPlayer.erase(NextPlayer.begin() + 0);
+					}
+					
+			
+	}
 
 
 
