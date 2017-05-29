@@ -4,6 +4,7 @@
 #include "Renderer.hh"
 #include "ClashofEntios.hh"
 
+//Declaración de variables.
 std::ifstream file;
 Map map;
 std::vector<Entio>EntioPA;
@@ -32,7 +33,7 @@ void ordenarPorFatiga(std::vector<Entio>&Entios) {
 	}
 }
 
-//Función del menú principal del juego. Gracias a enti::systempause, el juego no comenzará hasta que el jugador puulse alguna tecla.
+//Función del menú principal del juego. Gracias a enti::systempause, el juego no comenzará hasta que el jugador pulse alguna tecla.
 void mainmenu(const enti::InputKey & key) {
 	enti::cout << enti::Color::YELLOW << "CLASH OF ENTIOS" << enti::endl << enti::endl;
 
@@ -55,6 +56,7 @@ void mainmenu(const enti::InputKey & key) {
 	enti::systemPause();
  }
 
+//Función que vacía el stackd e cada entio al final de turno.
 void vaciarStack(std::vector<Entio>&Entios) {
 	for (int i = 0; i < Entios.size(); i++) {
 		while (Entios[i].lastRow.size() > 0 && Entios[i].lastCol.size() > 0) {
