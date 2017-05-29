@@ -214,12 +214,12 @@ void Map::drawHUD(int acciones, symbols entio, enti::InputKey & key, bool attack
 		enti::cout << enti::Color::YELLOW << "2 - BOW" << enti::endl;
 	}		
 	if (sword || bow) {
-		attack = false;
 		enti::cout << enti::Color::YELLOW << "Enter the direction to attack:" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "1 - UP" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "2 - LEFT" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "3 - DOWN" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "4 - RIGHT" << enti::endl;
+		attack = false;
 	}
 	enti::cout << enti::cend;
 }
@@ -471,32 +471,44 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 			if (key == enti::InputKey::NUM1) {
 				sword = true;
 				attack = false;
-				if (sword) {
-					enti::systemPause;
-					if (key == enti::InputKey::NUM1) {
-						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
-							NextPlayer.erase(NextPlayer.begin()+0);
-							sword = false;
-						}
-						else {
-							enti::cout << "you failed!";
-							sword = false;
-						}
-					}
-					else if (key == enti::InputKey::NUM2) {
-
-					}
-					else if (key == enti::InputKey::NUM3) {
-
-					}
-					else if (key == enti::InputKey::NUM4) {
-
-					}
-				}
 			}
 			else if (key == enti::InputKey::NUM2) {
 				bow = true;
 				attack = false;
+			}
+		}
+		if (sword) {
+			if (key == enti::InputKey::NUM1) {
+				if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+					NextPlayer.erase(NextPlayer.begin() + 0);
+				}
+				else {
+					enti::cout << "you failed!";
+				}
+			}
+			else if (key == enti::InputKey::NUM2) {
+				if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+					NextPlayer.erase(NextPlayer.begin() + 0);
+				}
+				else {
+					enti::cout << "you failed!";
+				}
+			}
+			else if (key == enti::InputKey::NUM3) {
+				if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+					NextPlayer.erase(NextPlayer.begin() + 0);
+				}
+				else {
+					enti::cout << "you failed!";
+				}
+			}
+			else if (key == enti::InputKey::NUM4) {
+				if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+					NextPlayer.erase(NextPlayer.begin() + 0);
+				}
+				else {
+					enti::cout << "you failed!";
+				}
 			}
 		}
 

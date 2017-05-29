@@ -74,7 +74,7 @@ int main() {
 	while (true) {
 		if (player.PlayerMovement(tecla, CurrentPlayer, NextPlayer)) {
 			vaciarStack(CurrentPlayer);
-			ordenarPorFatiga(CurrentPlayer);
+			//ordenarPorFatiga(CurrentPlayer);
 			swapPlayer(CurrentPlayer, NextPlayer);
 			player.player1torn = !player.player1torn;
 			player.currentEntio = 0;
