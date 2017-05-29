@@ -254,48 +254,48 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerA[0].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[0].CurrentRow = i;
 				EntiosPlayerA[0].CurrentCol = j;
-				EntiosPlayerA[0].lastRow.push(0);
-				EntiosPlayerA[0].lastCol.push(0);
+				EntiosPlayerA[0].lastRow.push(EntiosPlayerA[0].CurrentRow);
+				EntiosPlayerA[0].lastCol.push(EntiosPlayerA[0].CurrentCol);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOB) {
 				EntiosPlayerA.push_back(Entio());
 				EntiosPlayerA[1].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[1].CurrentRow = i;
 				EntiosPlayerA[1].CurrentCol = j;
-				EntiosPlayerA[1].lastRow.push(0);
-				EntiosPlayerA[1].lastCol.push(0);
+				EntiosPlayerA[1].lastRow.push(EntiosPlayerA[1].CurrentRow);
+				EntiosPlayerA[1].lastCol.push(EntiosPlayerA[1].CurrentCol);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOC) {
 				EntiosPlayerA.push_back(Entio());
 				EntiosPlayerA[2].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[2].CurrentRow = i;
 				EntiosPlayerA[2].CurrentCol = j;
-				EntiosPlayerA[2].lastRow.push(0);
-				EntiosPlayerA[2].lastCol.push(0);
+				EntiosPlayerA[2].lastRow.push(EntiosPlayerA[2].CurrentRow);
+				EntiosPlayerA[2].lastCol.push(EntiosPlayerA[2].CurrentCol);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOD) {
 				EntiosPlayerA.push_back(Entio());
 				EntiosPlayerA[3].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[3].CurrentRow = i;
 				EntiosPlayerA[3].CurrentCol = j;
-				EntiosPlayerA[3].lastRow.push(0);
-				EntiosPlayerA[3].lastCol.push(0);
+				EntiosPlayerA[3].lastRow.push(EntiosPlayerA[3].CurrentRow);
+				EntiosPlayerA[3].lastCol.push(EntiosPlayerA[3].CurrentCol);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOE) {
 				EntiosPlayerA.push_back(Entio());
 				EntiosPlayerA[4].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[4].CurrentRow = i;
 				EntiosPlayerA[4].CurrentCol = j;
-				EntiosPlayerA[4].lastRow.push(0);
-				EntiosPlayerA[4].lastCol.push(0);
+				EntiosPlayerA[4].lastRow.push(EntiosPlayerA[4].CurrentRow);
+				EntiosPlayerA[4].lastCol.push(EntiosPlayerA[4].CurrentCol);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIOF) {
 				EntiosPlayerA.push_back(Entio());
 				EntiosPlayerA[5].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerA[5].CurrentRow = i;
 				EntiosPlayerA[5].CurrentCol = j;
-				EntiosPlayerA[5].lastRow.push(0);
-				EntiosPlayerA[5].lastCol.push(0);
+				EntiosPlayerA[5].lastRow.push(EntiosPlayerA[5].CurrentRow);
+				EntiosPlayerA[5].lastCol.push(EntiosPlayerA[5].CurrentCol);
 			}
 
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO1) {
@@ -303,48 +303,48 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 				EntiosPlayerB[0].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[0].CurrentRow = i;
 				EntiosPlayerB[0].CurrentCol = j;
-				EntiosPlayerA[0].lastRow.push(0);
-				EntiosPlayerA[0].lastCol.push(0);
+				EntiosPlayerA[0].lastRow.push(EntiosPlayerA[0].CurrentRow);
+				EntiosPlayerA[0].lastCol.push(EntiosPlayerA[0].CurrentCol);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO2) {
 				EntiosPlayerB.push_back(Entio());
 				EntiosPlayerB[1].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[1].CurrentRow = i;
 				EntiosPlayerB[1].CurrentCol = j;
-				EntiosPlayerA[1].lastRow.push(0);
-				EntiosPlayerA[1].lastCol.push(0);
+				EntiosPlayerA[1].lastRow.push(EntiosPlayerA[1].CurrentRow);
+				EntiosPlayerA[1].lastCol.push(EntiosPlayerA[1].CurrentCol);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO3) {
 				EntiosPlayerB.push_back(Entio());
 				EntiosPlayerB[2].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[2].CurrentRow = i;
 				EntiosPlayerB[2].CurrentCol = j;
-				EntiosPlayerA[2].lastRow.push(0);
-				EntiosPlayerA[2].lastCol.push(0);
+				EntiosPlayerA[2].lastRow.push(EntiosPlayerA[2].CurrentRow);
+				EntiosPlayerA[2].lastCol.push(EntiosPlayerA[2].CurrentCol);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO4) {
 				EntiosPlayerB.push_back(Entio());
 				EntiosPlayerB[3].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[3].CurrentRow = i;
 				EntiosPlayerB[3].CurrentCol = j;
-				EntiosPlayerA[3].lastRow.push(0);
-				EntiosPlayerA[3].lastCol.push(0);
+				EntiosPlayerA[3].lastRow.push(EntiosPlayerA[3].CurrentRow);
+				EntiosPlayerA[3].lastCol.push(EntiosPlayerA[3].CurrentCol);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO5) {
 				EntiosPlayerB.push_back(Entio());
 				EntiosPlayerB[4].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[4].CurrentRow = i;
 				EntiosPlayerB[4].CurrentCol = j;
-				EntiosPlayerA[4].lastRow.push(0);
-				EntiosPlayerA[4].lastCol.push(0);
+				EntiosPlayerA[4].lastRow.push(EntiosPlayerA[4].CurrentRow);
+				EntiosPlayerA[4].lastCol.push(EntiosPlayerA[4].CurrentCol);
 			}
 			else if (CurrentMap->infoMap[i][j] == symbols::ENTIO6) {
 				EntiosPlayerB.push_back(Entio());
 				EntiosPlayerB[5].caracter = CurrentMap->infoMap[i][j];
 				EntiosPlayerB[5].CurrentRow = i;
 				EntiosPlayerB[5].CurrentCol = j;
-				EntiosPlayerA[4].lastRow.push(0);
-				EntiosPlayerA[4].lastCol.push(0);
+				EntiosPlayerA[5].lastRow.push(EntiosPlayerA[5].CurrentRow);
+				EntiosPlayerA[5].lastCol.push(EntiosPlayerA[5].CurrentCol);
 			}
 		}
 	}
@@ -429,12 +429,14 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				sword = false;
 				bow = false;
 			}
-			else if (CurrentPlayer[currentEntio].lastRow.size() > 0 && CurrentPlayer[currentEntio].lastCol.size() > 0) {
+			else if (CurrentPlayer[currentEntio].lastRow.size() >= 0 && CurrentPlayer[currentEntio].lastCol.size() >= 0) {
 				if (CurrentPlayer[currentEntio].CurrentRow != CurrentPlayer[currentEntio].lastRow.top() || CurrentPlayer[currentEntio].CurrentCol != CurrentPlayer[currentEntio].lastCol.top()) {
 					CurrentPlayer[currentEntio].CurrentRow = CurrentPlayer[currentEntio].lastRow.top();
 					CurrentPlayer[currentEntio].CurrentCol = CurrentPlayer[currentEntio].lastCol.top();
-					CurrentPlayer[currentEntio].lastCol.pop();
-					CurrentPlayer[currentEntio].lastRow.pop();
+					if (CurrentPlayer[currentEntio].lastRow.size() != 0 && CurrentPlayer[currentEntio].lastCol.size() != 0) {
+						CurrentPlayer[currentEntio].lastCol.pop();
+						CurrentPlayer[currentEntio].lastRow.pop();
+					}
 					CurrentPlayer[currentEntio].fatiga--;
 					acciones++;
 				}
