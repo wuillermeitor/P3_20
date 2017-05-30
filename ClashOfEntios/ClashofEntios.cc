@@ -594,6 +594,9 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 						} //Soc concient de que en comptes de repetir tot aixo per cada possible direcció del arc seria millor fer uyna funcio pero de momento ho deixo aixi
 					}  //Tambe falta el cout<< You failed pero ara mateix no se on posarlo
 				}
+				else {
+					enti::cout << "you failed!";
+				}
 			}
 			else if (key == enti::InputKey::NUM2) {
 				if (CurrentPlayer[currentEntio].flechas <= 10) {
@@ -629,6 +632,9 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 							break;
 						}
 					}
+				}
+				else {
+					enti::cout << "you failed!";
 				}
 			}
 			else if (key == enti::InputKey::NUM3) {
@@ -666,6 +672,8 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 						}
 					}
 				}
+				else { enti::cout << "you failed!";
+				}
 			}
 			else if (key == enti::InputKey::NUM4) {
 				if (CurrentPlayer[currentEntio].flechas <= 10) {
@@ -701,6 +709,8 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 							break;
 						}
 					}
+				}
+				else { enti::cout << "you failed!";
 				}
 			}
 			if (accionRealizada) { acciones--; }
