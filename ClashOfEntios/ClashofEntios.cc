@@ -380,16 +380,36 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 
 int Player::arco( int casillas) {
 	switch (casillas) {
-	case 10: vidaquitada = 1;
-	case 9: vidaquitada = 2;
-	case 8: vidaquitada = 3;
-	case 7: vidaquitada = 4;
-	case 6: vidaquitada = 5;
-	case 5: vidaquitada = 6;
-	case 4: vidaquitada = 7;
-	case 3: vidaquitada = 8;
-	case 2: vidaquitada = 9;
-	case 1: vidaquitada = 10;
+	case 10: 
+		vidaquitada = 1;
+		break;
+	case 9: 
+		vidaquitada = 2;
+		break;
+	case 8:
+		vidaquitada = 3;
+		break;
+	case 7:
+		vidaquitada = 4;
+		break;
+	case 6: 
+		vidaquitada = 5;
+		break;
+	case 5:
+		vidaquitada = 6;
+		break;
+	case 4:
+		vidaquitada = 7;
+		break;
+	case 3:
+		vidaquitada = 8;
+		break;
+	case 2: 
+		vidaquitada = 9;
+		break;
+	case 1: 
+		vidaquitada = 10;
+		break;
 	}
 	return vidaquitada;
 }
