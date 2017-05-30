@@ -414,6 +414,27 @@ int Player::arco( int casillas) {
 	return vidaquitada;
 }
 
+void Player::checkNextPlayerDie(std::vector<Entio>&NextPlayer) {
+	if (NextPlayer[0].vida <= 0) {
+		NextPlayer.erase(NextPlayer.begin() + 0);
+	}
+	else if(NextPlayer[1].vida <= 0) {
+		NextPlayer.erase(NextPlayer.begin() + 0);
+	}
+	else if (NextPlayer[2].vida <= 0) {
+		NextPlayer.erase(NextPlayer.begin() + 0);
+	}
+	else if (NextPlayer[3].vida <= 0) {
+		NextPlayer.erase(NextPlayer.begin() + 0);
+	}
+	else if (NextPlayer[4].vida <= 0) {
+		NextPlayer.erase(NextPlayer.begin() + 0);
+	}
+	else if (NextPlayer[5].vida <= 0) {
+		NextPlayer.erase(NextPlayer.begin() + 0);
+	}
+}
+
 bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer) {
 	bool accionRealizada = false;
 	std::vector<Entio> tmp;
@@ -563,8 +584,8 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
 						NextPlayer[5].vida - arco(i);
 						break;
-					}
-				} 
+					} //Soc concient de que en comptes de repetir tot aixo per cada possible direcció del arc seria millor fer uyna funcio pero de momento ho deixo aixi
+				}  //Tambe falta el cout<< You failed pero ara mateix no se on posarlo
 		
 		}
 			else if (key == enti::InputKey::NUM2) {

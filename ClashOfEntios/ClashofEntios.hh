@@ -79,5 +79,6 @@ public:
 	bool sword = false;
 	private:
 	int arco(int casillas);
+	void Player::checkNextPlayerDie(std::vector<Entio>&NextPlayer);
 	Map * CurrentMap;
 };
