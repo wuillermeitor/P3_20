@@ -527,7 +527,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				sword = false;
 				bow = false;
 			}
-		}	
+		}
 		else if (key == enti::InputKey::Z || key == enti::InputKey::z) {
 			if (attack == true || sword == true || bow == true) {
 				attack = false;
@@ -538,8 +538,8 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				if (CurrentPlayer[currentEntio].CurrentRow != CurrentPlayer[currentEntio].lastRow.top() || CurrentPlayer[currentEntio].CurrentCol != CurrentPlayer[currentEntio].lastCol.top()) {
 					CurrentPlayer[currentEntio].CurrentRow = CurrentPlayer[currentEntio].lastRow.top();
 					CurrentPlayer[currentEntio].CurrentCol = CurrentPlayer[currentEntio].lastCol.top();
-						CurrentPlayer[currentEntio].lastCol.pop();
-						CurrentPlayer[currentEntio].lastRow.pop();
+					CurrentPlayer[currentEntio].lastCol.pop();
+					CurrentPlayer[currentEntio].lastRow.pop();
 					CurrentPlayer[currentEntio].fatiga--;
 					acciones++;
 				}
@@ -593,9 +593,10 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 							break;
 						} //Soc concient de que en comptes de repetir tot aixo per cada possible direcció del arc seria millor fer uyna funcio pero de momento ho deixo aixi
 					}  //Tambe falta el cout<< You failed pero ara mateix no se on posarlo
-
 				}
-				else if (key == enti::InputKey::NUM2) {
+			}
+			else if (key == enti::InputKey::NUM2) {
+				if (CurrentPlayer[currentEntio].flechas <= 10) {
 					for (int i = 1; i < 10; i++) {
 						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
 							NextPlayer[0].vida - arco(i);
@@ -629,7 +630,9 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 						}
 					}
 				}
-				else if (key == enti::InputKey::NUM3) {
+			}
+			else if (key == enti::InputKey::NUM3) {
+				if (CurrentPlayer[currentEntio].flechas <= 10) {
 					for (int i = 1; i < 10; i++) {
 						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
 							NextPlayer[0].vida - arco(i);
@@ -663,7 +666,9 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 						}
 					}
 				}
-				else if (key == enti::InputKey::NUM4) {
+			}
+			else if (key == enti::InputKey::NUM4) {
+				if (CurrentPlayer[currentEntio].flechas <= 10) {
 					for (int i = 1; i < 10; i++) {
 						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
 							NextPlayer[0].vida - arco(i);
@@ -697,59 +702,59 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 						}
 					}
 				}
-				if (accionRealizada) { acciones--; }
-				CurrentPlayer[currentEntio].flechas;
+			}
+			if (accionRealizada) { acciones--; }
+			CurrentPlayer[currentEntio].flechas;
+		}
+	}
+
+	if (sword) {
+		if (key == enti::InputKey::NUM1) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+				NextPlayer.erase(NextPlayer.begin() + 0);
+			}
+			else {
+				enti::cout << "you failed!";
 			}
 		}
-		
-			if (sword) {
-				if (key == enti::InputKey::NUM1) {
-					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
-						NextPlayer.erase(NextPlayer.begin() + 0);
-					}
-					else {
-						enti::cout << "you failed!";
-					}
-				}
-				else if (key == enti::InputKey::NUM2) {
-					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
-						NextPlayer.erase(NextPlayer.begin() + 0);
-					}
-					else {
-						enti::cout << "you failed!";
-					}
-				}
-				else if (key == enti::InputKey::NUM3) {
-					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
-						NextPlayer.erase(NextPlayer.begin() + 0);
-					}
-					else {
-						enti::cout << "you failed!";
-					}
-				}
-				else if (key == enti::InputKey::NUM4) {
-					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
-						NextPlayer.erase(NextPlayer.begin() + 0);
-					}
-					else {
-						enti::cout << "you failed!";
-					}
-				}
+		else if (key == enti::InputKey::NUM2) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+				NextPlayer.erase(NextPlayer.begin() + 0);
 			}
-
-
-			if (accionRealizada) { acciones--; }
+			else {
+				enti::cout << "you failed!";
+			}
+		}
+		else if (key == enti::InputKey::NUM3) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+				NextPlayer.erase(NextPlayer.begin() + 0);
+			}
+			else {
+				enti::cout << "you failed!";
+			}
+		}
+		else if (key == enti::InputKey::NUM4) {
+			if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+				NextPlayer.erase(NextPlayer.begin() + 0);
+			}
+			else {
+				enti::cout << "you failed!";
+			}
+		}
 	}
-
-
-	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].caracter);
-
-
-	if (acciones == 0 && key == enti::InputKey::ENTER) {
-		acciones = 10;
-		return true;
+	if (accionRealizada) { acciones--; }
 	}
-	else {
-		return false;
-	}
+}
+
+
+CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].caracter);
+
+
+if (acciones == 0 && key == enti::InputKey::ENTER) {
+	acciones = 10;
+	return true;
+}
+else {
+	return false;
+}
 }
