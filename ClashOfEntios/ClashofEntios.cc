@@ -558,7 +558,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				attack = false;
 			}
 		}
-		if (bow) {
+		if (bow) { //IMPORTANTE LAS FLECHAS NO RESPETAN LAS MONTAÑAS (SE TIENE QUE MODIFICAR)
 			if (key == enti::InputKey::NUM1) {
 				if (CurrentPlayer[currentEntio].flechas <= 10) {
 					for (int i = 1; i < 10; i++) {
