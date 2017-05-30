@@ -560,183 +560,185 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		}
 		if (bow) {
 			if (key == enti::InputKey::NUM1) {
-				for (int i = 1; i < 10; i++)	{
-					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
-						NextPlayer[0].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[1].caracter)) {
-						NextPlayer[1].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
-						NextPlayer[2].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
-						NextPlayer[3].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
-						NextPlayer[4].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
-						NextPlayer[5].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					} //Soc concient de que en comptes de repetir tot aixo per cada possible direcció del arc seria millor fer uyna funcio pero de momento ho deixo aixi
-				}  //Tambe falta el cout<< You failed pero ara mateix no se on posarlo
-		
-		}
-			else if (key == enti::InputKey::NUM2) {
-				for (int i = 1; i < 10; i++) {
-					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
-						NextPlayer[0].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[1].caracter)) {
-						NextPlayer[1].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
-						NextPlayer[2].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
-						NextPlayer[3].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
-						NextPlayer[4].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
-						NextPlayer[5].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-				}
+				if (CurrentPlayer[currentEntio].flechas <= 10) {
+					for (int i = 1; i < 10; i++) {
+						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
+							NextPlayer[0].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[1].caracter)) {
+							NextPlayer[1].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
+							NextPlayer[2].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
+							NextPlayer[3].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
+							NextPlayer[4].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
+							NextPlayer[5].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						} //Soc concient de que en comptes de repetir tot aixo per cada possible direcció del arc seria millor fer uyna funcio pero de momento ho deixo aixi
+					}  //Tambe falta el cout<< You failed pero ara mateix no se on posarlo
 
+				}
+				else if (key == enti::InputKey::NUM2) {
+					for (int i = 1; i < 10; i++) {
+						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+							NextPlayer[0].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[1].caracter)) {
+							NextPlayer[1].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
+							NextPlayer[2].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
+							NextPlayer[3].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
+							NextPlayer[4].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
+							NextPlayer[5].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+					}
+				}
+				else if (key == enti::InputKey::NUM3) {
+					for (int i = 1; i < 10; i++) {
+						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
+							NextPlayer[0].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[1].caracter)) {
+							NextPlayer[1].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
+							NextPlayer[2].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
+							NextPlayer[3].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
+							NextPlayer[4].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
+							NextPlayer[5].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+					}
+				}
+				else if (key == enti::InputKey::NUM4) {
+					for (int i = 1; i < 10; i++) {
+						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
+							NextPlayer[0].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[1].caracter)) {
+							NextPlayer[1].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
+							NextPlayer[2].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
+							NextPlayer[3].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
+							NextPlayer[4].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
+							NextPlayer[5].vida - arco(i);
+							checkNextPlayerDie(NextPlayer);
+							break;
+						}
+					}
+				}
+				if (accionRealizada) { acciones--; }
+				CurrentPlayer[currentEntio].flechas;
 			}
-			else if (key == enti::InputKey::NUM3) {
-				for (int i = 1; i < 10; i++) {
-					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
-						NextPlayer[0].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break; 
+		}
+		
+			if (sword) {
+				if (key == enti::InputKey::NUM1) {
+					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+						NextPlayer.erase(NextPlayer.begin() + 0);
 					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[1].caracter)) {
-						NextPlayer[1].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
+					else {
+						enti::cout << "you failed!";
 					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
-						NextPlayer[2].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
+				}
+				else if (key == enti::InputKey::NUM2) {
+					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+						NextPlayer.erase(NextPlayer.begin() + 0);
 					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
-						NextPlayer[3].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
+					else {
+						enti::cout << "you failed!";
 					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
-						NextPlayer[4].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
+				}
+				else if (key == enti::InputKey::NUM3) {
+					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+						NextPlayer.erase(NextPlayer.begin() + 0);
 					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
-						NextPlayer[5].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
+					else {
+						enti::cout << "you failed!";
+					}
+				}
+				else if (key == enti::InputKey::NUM4) {
+					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
+						NextPlayer.erase(NextPlayer.begin() + 0);
+					}
+					else {
+						enti::cout << "you failed!";
 					}
 				}
 			}
-			else if (key == enti::InputKey::NUM4) {
-				for (int i = 1; i < 10; i++) {
-					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
-						NextPlayer[0].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[1].caracter)) {
-						NextPlayer[1].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
-						NextPlayer[2].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
-						NextPlayer[3].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
-						NextPlayer[4].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-					else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
-						NextPlayer[5].vida - arco(i);
-						checkNextPlayerDie(NextPlayer);
-						break;
-					}
-				}
-			}	
+
+
 			if (accionRealizada) { acciones--; }
-		}
-		
-		if (sword) {
-			if (key == enti::InputKey::NUM1) {
-				if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
-					NextPlayer.erase(NextPlayer.begin() + 0);
-				}
-				else {
-					enti::cout << "you failed!";
-				}
-			}
-			else if (key == enti::InputKey::NUM2) {
-				if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
-					NextPlayer.erase(NextPlayer.begin() + 0);
-				}
-				else {
-					enti::cout << "you failed!";
-				}
-			}
-			else if (key == enti::InputKey::NUM3) {
-				if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
-					NextPlayer.erase(NextPlayer.begin() + 0);
-				}
-				else {
-					enti::cout << "you failed!";
-				}
-			}
-			else if (key == enti::InputKey::NUM4) {
-				if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentCol + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[0].caracter) {
-					NextPlayer.erase(NextPlayer.begin() + 0);
-				}
-				else {
-					enti::cout << "you failed!";
-				}
-			}
-		}
-
-
-		if (accionRealizada) { acciones--; }
 	}
 
 
