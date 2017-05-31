@@ -11,7 +11,7 @@ std::vector<Entio>EntioPA;
 std::vector<Entio>EntioPB;
 std::vector<Entio>CurrentPlayer;
 std::vector<Entio>NextPlayer;
-
+bool game = false;
 //Función que cambia de jugador en el bucle del juego.
 void swapPlayer(std::vector<Entio>&Player1, std::vector<Entio>&Player2) {
 	std::vector<Entio>aux = Player1;
@@ -54,6 +54,7 @@ void mainmenu(const enti::InputKey & key) {
 	enti::cout << enti::cend;
 
 	enti::systemPause();
+	game = true;
  }
 
 //Función que vacía el stack de cada entio al final de turno.
@@ -74,7 +75,7 @@ int main() {
 	Player player(&map, EntioPA, EntioPB);
 	CurrentPlayer = EntioPA;
 	NextPlayer = EntioPB;
-	while (true) {
+	while (game) {
 		if (player.PlayerMovement(tecla, CurrentPlayer, NextPlayer)) {
 			vaciarStack(CurrentPlayer);
 			ordenarPorFatiga(CurrentPlayer);
@@ -85,6 +86,11 @@ int main() {
 		map.drawMap(player.player1torn, CurrentPlayer, player.currentEntio);
 		map.drawHUD(player.acciones, CurrentPlayer[player.currentEntio].caracter, tecla, player.attack, player.sword, player.bow);
 		tecla = enti::getInputKey();
+		if (CurrentPlayer.size() == 0 || NextPlayer.size() == 0) {
+			game = false;
+			enti::systemPause();
+			return 0;
+		}
 		if (tecla == enti::InputKey::ESC) {
 			return 0;
 		}

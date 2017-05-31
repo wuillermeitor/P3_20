@@ -55,7 +55,6 @@ private:
 	//Atributos de la clase
 	vector dimensiones;
 	symbols**infoMap;
-	Player *player;
 };
 
 

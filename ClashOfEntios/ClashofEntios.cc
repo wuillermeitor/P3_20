@@ -752,6 +752,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		}
 		if (sword) {
 			if (key == enti::InputKey::NUM1) {
+				accionRealizada = true;
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[i].caracter) {
 						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
@@ -763,6 +764,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				}
 			}
 			else if (key == enti::InputKey::NUM2) {
+				accionRealizada = true;
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == NextPlayer[i].caracter) {
 						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
@@ -774,6 +776,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				}
 			}
 			else if (key == enti::InputKey::NUM3) {
+				accionRealizada = true;
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[i].caracter) {
 						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
@@ -785,6 +788,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				}
 			}
 			else if (key == enti::InputKey::NUM4) {
+				accionRealizada = true;
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == NextPlayer[i].caracter) {
 						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
