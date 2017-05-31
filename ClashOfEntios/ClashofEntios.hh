@@ -29,7 +29,6 @@ enum class symbols :char {
 struct Entio {
 	symbols caracter;
 	symbols nextPosition;
-	bool hasmoved = false;
 	int CurrentRow;
 	int CurrentCol;
 	int originRow;
@@ -49,10 +48,8 @@ public:
 	void ReadMap(std::ifstream &file, std::string filename);//método que lee el mapa del archivo default.cfg
 	void drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int currentEntio);//método que dibujará el mapa en función de lo leído con el anterior método.
 	void drawHUD(int acciones, symbols entio, enti::InputKey & key, bool attack, bool sword, bool bow);
-	symbols posicion(const vector & location);//Método que devuelve el símbolo de la posición indicada
-	void modificar(const vector & target, const symbols & value);//método que modifica una posición del mapa en función del struct vector.
-	void modificarPos(int & _row, int & _column, const symbols & value);//método que modifica una posición del mapa en función de dos parámetros.
-	symbols guardarCaracter(int & _row, int & _column);
+	void modificarPos(int & _row, int & _column, const symbols & value);//método que modifica una posición del mapa en función de la posición y el símbolo.
+	symbols guardarCaracter(int & _row, int & _column);//Método que devuelve el símbolo de la posición indicada.
 	~Map();//destructor de la clase Map.
 private:
 	//Atributos de la clase
