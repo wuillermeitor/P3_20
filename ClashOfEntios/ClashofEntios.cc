@@ -416,23 +416,11 @@ int Player::arco( int casillas) {
 }
 
 void Player::checkNextPlayerDie(std::vector<Entio>&NextPlayer) {
-	if (NextPlayer[0].vida <= 0) {
-		NextPlayer.erase(NextPlayer.begin() + 0);
-	}
-	else if(NextPlayer[1].vida <= 0) {
-		NextPlayer.erase(NextPlayer.begin() + 0);
-	}
-	else if (NextPlayer[2].vida <= 0) {
-		NextPlayer.erase(NextPlayer.begin() + 0);
-	}
-	else if (NextPlayer[3].vida <= 0) {
-		NextPlayer.erase(NextPlayer.begin() + 0);
-	}
-	else if (NextPlayer[4].vida <= 0) {
-		NextPlayer.erase(NextPlayer.begin() + 0);
-	}
-	else if (NextPlayer[5].vida <= 0) {
-		NextPlayer.erase(NextPlayer.begin() + 0);
+	for (int i = 0; i < NextPlayer.size(); i++) {
+		if (NextPlayer[i].vida <= 0) {
+			CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
+			NextPlayer.erase(NextPlayer.begin() + i);
+		}
 	}
 }
 
@@ -766,6 +754,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 			if (key == enti::InputKey::NUM1) {
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[i].caracter) {
+						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
 						NextPlayer.erase(NextPlayer.begin() + i);
 					}
 					else {
@@ -776,6 +765,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 			else if (key == enti::InputKey::NUM2) {
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == NextPlayer[i].caracter) {
+						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
 						NextPlayer.erase(NextPlayer.begin() + i);
 					}
 					else {
@@ -786,6 +776,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 			else if (key == enti::InputKey::NUM3) {
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[i].caracter) {
+						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
 						NextPlayer.erase(NextPlayer.begin() + i);
 					}
 					else {
@@ -796,6 +787,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 			else if (key == enti::InputKey::NUM4) {
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == NextPlayer[i].caracter) {
+						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
 						NextPlayer.erase(NextPlayer.begin() + i);
 					}
 					else {
