@@ -78,13 +78,13 @@ int main() {
 	while (game) {
 		if (player.PlayerMovement(tecla, CurrentPlayer, NextPlayer)) {
 			vaciarStack(CurrentPlayer);
-			ordenarPorFatiga(CurrentPlayer);
+			//ordenarPorFatiga(CurrentPlayer);
 			swapPlayer(CurrentPlayer, NextPlayer);
 			player.player1torn = !player.player1torn;
 			player.currentEntio = 0;
 		}
 		map.drawMap(player.player1torn, CurrentPlayer, player.currentEntio);
-		map.drawHUD(player.acciones, CurrentPlayer[player.currentEntio].caracter, tecla, player.attack, player.sword, player.bow);
+		map.drawHUD(player.acciones, player.currentEntio, CurrentPlayer, NextPlayer, player.hit, player.attack, player.sword, player.bow);
 		tecla = enti::getInputKey();
 		if (CurrentPlayer.size() == 0 || NextPlayer.size() == 0) {
 			game = false;

@@ -98,9 +98,9 @@ void Map::drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int curre
 	//En caso de los entios, se pintará de color magenta aquel que se esté usando en ese momento.
 	for (int i = 0; i < dimensiones.filas; i++) {
 		for (int j = 0; j < dimensiones.columnas; j++) {
-			if (infoMap[i][j] == symbols::MONTAÑA && j < dimensiones.columnas-1) {
-					enti::cout << enti::Color::LIGHTRED << static_cast<char>(infoMap[i][j]);
-					enti::cout << " ";
+			if (infoMap[i][j] == symbols::MONTAÑA && j < dimensiones.columnas - 1) {
+				enti::cout << enti::Color::LIGHTRED << static_cast<char>(infoMap[i][j]);
+				enti::cout << " ";
 			}
 			else if (infoMap[i][j] == symbols::AGUA) {
 				enti::cout << enti::Color::LIGHTCYAN << static_cast<char>(infoMap[i][j]);
@@ -205,28 +205,40 @@ void Map::drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int curre
 	}
 }
 
-void Map::drawHUD(int acciones, symbols entio, enti::InputKey & key, bool attack, bool sword, bool bow) {
+void Map::drawHUD(int acciones, int currentEntio, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer, int &hit, bool &attack, bool &sword, bool &bow) {
 	//Esta función imprimirá debajo del mapa los movimientos que le quedan al jugador, el entio que está moviendo, si ha finalizado
 	//el turno, y le informará de cómo peude atacar cuando pulse espacio.
 	enti::cout << enti::endl;
 	enti::cout << enti::Color::YELLOW << "Remaining movements: " << enti::Color::LIGHTCYAN << acciones << enti::endl;
-	enti::cout << enti::Color::YELLOW << "Now moves character  " << enti::Color::LIGHTCYAN << static_cast<char>(entio) << enti::endl << enti::endl;
+	enti::cout << enti::Color::YELLOW << "Now moves character  " << enti::Color::LIGHTCYAN << static_cast<char>(CurrentPlayer[currentEntio].caracter) << enti::endl << enti::endl;
 	if (acciones == 0) {
-		enti::cout << enti::Color::LIGHTMAGENTA << "Press ENTER to end your turn!"<< enti::endl;
+		enti::cout << enti::Color::LIGHTMAGENTA << "Press ENTER to end your turn!" << enti::endl;
 	}
 
 	if (attack) {
-		enti::cout << enti::Color::YELLOW << "Enter the weapon you want to choose:"<< enti::endl;
-		enti::cout << enti::Color::YELLOW << "1 - SWORD"<< enti::endl;
+		enti::cout << enti::Color::WHITE << "Enter the weapon you want to choose:" << enti::endl;
+		enti::cout << enti::Color::YELLOW << "1 - SWORD" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "2 - BOW" << enti::endl;
-	}		
+	}
+
 	if (sword || bow) {
-		enti::cout << enti::Color::YELLOW << "Enter the direction to attack:" << enti::endl;
+		enti::cout << enti::Color::WHITE << "Enter the direction to attack:" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "1 - UP" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "2 - LEFT" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "3 - DOWN" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "4 - RIGHT" << enti::endl;
-		attack = false;
+	}
+
+	if (hit == 1) {
+		enti::cout << enti::Color::WHITE << "You inflicted 10 damage to entio " << static_cast<char>(CurrentPlayer[currentEntio].villain) << enti::endl;
+		enti::cout << enti::Color::LIGHTMAGENTA << "Entio " << static_cast<char>(CurrentPlayer[currentEntio].villain) << " killed!" << enti::endl;
+		sword = false;
+		bow = false;
+	}
+	else if(hit == 3){
+		enti::cout << enti::Color::WHITE << "you failed!";
+		sword = false;
+		bow = false;
 	}
 	enti::cout << enti::cend;
 }
@@ -379,12 +391,12 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 	}
 }
 
-int Player::arco( int casillas) {
+int Player::arco(int casillas) {
 	switch (casillas) {
-	case 10: 
+	case 10:
 		vidaquitada = 1;
 		break;
-	case 9: 
+	case 9:
 		vidaquitada = 2;
 		break;
 	case 8:
@@ -393,7 +405,7 @@ int Player::arco( int casillas) {
 	case 7:
 		vidaquitada = 4;
 		break;
-	case 6: 
+	case 6:
 		vidaquitada = 5;
 		break;
 	case 5:
@@ -405,10 +417,10 @@ int Player::arco( int casillas) {
 	case 3:
 		vidaquitada = 8;
 		break;
-	case 2: 
+	case 2:
 		vidaquitada = 9;
 		break;
-	case 1: 
+	case 1:
 		vidaquitada = 10;
 		break;
 	}
@@ -424,7 +436,7 @@ void Player::checkNextPlayerDie(std::vector<Entio>&NextPlayer) {
 	}
 }
 
-bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer) {
+bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer) {
 	//Primero hacemos una declaración de variables. La primera será si se ha realizado alguna acción (inicialziada en false), 
 	//y la segunda será un vector temporal que suaremos más adelante, y la tercera será el caracter del entio.
 	bool accionRealizada = false;
@@ -446,6 +458,7 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 
 	//Ahora comprobaremos si el jugador ha realizado alguna acción.
 	if (key != enti::InputKey::NONE && acciones > 0) {
+		hit = 0;
 		//El primer caso que tenemos es enter, es decir, si cambiará de entio.
 		if (key == enti::InputKey::ENTER) {
 			//En primer lugar, guardamos el caracter del entio actual en la variable creada anteriormente y le incrementamos la fatiga.
@@ -499,7 +512,6 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				acciones++;
 			}
 		}
-
 		//A partir de ahora, el movimiento del jugador. 
 		//En las cuatro direcciones es lo mismo. Se comprueba si en la siguiente casilla se puede caminar (Es decir, si es tierra o bosque),
 		//y si se puede, guardaremos en un stack del propio entio la posición en la que se encontraba anteriormente, a continuación le cambiaremos
@@ -583,10 +595,12 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 		}
 		if (attack) {
 			if (key == enti::InputKey::NUM1) {
+				key = enti::InputKey::NONE;
 				sword = true;
 				attack = false;
 			}
 			else if (key == enti::InputKey::NUM2) {
+				key = enti::InputKey::NONE;
 				bow = true;
 				attack = false;
 			}
@@ -755,11 +769,14 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				accionRealizada = true;
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[i].caracter) {
+						hit = 1;
+						CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
 						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
 						NextPlayer.erase(NextPlayer.begin() + i);
+						break;
 					}
 					else {
-						enti::cout << "you failed!";
+						hit = 3;
 					}
 				}
 			}
@@ -767,11 +784,14 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				accionRealizada = true;
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - 1] == NextPlayer[i].caracter) {
+						hit = 1;
+						CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
 						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
 						NextPlayer.erase(NextPlayer.begin() + i);
+						break;
 					}
 					else {
-						enti::cout << "you failed!";
+						hit = 3;
 					}
 				}
 			}
@@ -779,11 +799,14 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				accionRealizada = true;
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + 1][CurrentPlayer[currentEntio].CurrentCol] == NextPlayer[i].caracter) {
+						hit = 1;
+						CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
 						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
 						NextPlayer.erase(NextPlayer.begin() + i);
+						break;
 					}
 					else {
-						enti::cout << "you failed!";
+						hit = 3;
 					}
 				}
 			}
@@ -791,11 +814,14 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 				accionRealizada = true;
 				for (int i = 0; i < NextPlayer.size(); i++) {
 					if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + 1] == NextPlayer[i].caracter) {
+						hit = 1;
+						CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
 						CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
 						NextPlayer.erase(NextPlayer.begin() + i);
+						break;
 					}
 					else {
-						enti::cout << "you failed!";
+						hit = 3;
 					}
 				}
 			}
@@ -809,6 +835,9 @@ bool Player::PlayerMovement(const enti::InputKey & key, std::vector<Entio>&Curre
 	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].caracter);
 
 	if (acciones == 0 && key == enti::InputKey::ENTER) {
+		attack = false;
+		sword = false;
+		bow = false;
 		acciones = 10;
 		return true;
 	}
