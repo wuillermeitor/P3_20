@@ -236,7 +236,7 @@ void Map::drawHUD(int acciones, int currentEntio, std::vector<Entio>&CurrentPlay
 		sword = false;
 		bow = false;
 	}
-	else if(hit == 3){
+	else if (hit == 3) {
 		enti::cout << enti::Color::WHITE << "you failed!";
 		sword = false;
 		bow = false;
@@ -442,6 +442,7 @@ void Player::checkNextPlayerDie(std::vector<Entio>&NextPlayer) {
 }
 
 bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer) {
+	enti::cout << CurrentPlayer[currentEntio].vida << enti::endl;
 	//Primero hacemos una declaración de variables. La primera será si se ha realizado alguna acción (inicialziada en false), 
 	//y la segunda será un vector temporal que suaremos más adelante, y la tercera será el caracter del entio.
 	bool accionRealizada = false;
@@ -608,164 +609,87 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 				attack = false;
 			}
 		}
-		if (bow) { //IMPORTANTE LAS FLECHAS NO RESPETAN LAS MONTAÑAS (SE TIENE QUE MODIFICAR)
+		if (bow) {
 			if (key == enti::InputKey::NUM1) {
+				CurrentPlayer[currentEntio].flechas--;
 				if (CurrentPlayer[currentEntio].flechas <= 10) {
-					for (int i = 1; i < 10; i++) {
-						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
-							NextPlayer[0].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[1].caracter)) {
-							NextPlayer[1].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
-							NextPlayer[2].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
-							NextPlayer[3].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
-							NextPlayer[4].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
-							NextPlayer[5].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						} //Soc concient de que en comptes de repetir tot aixo per cada possible direcció del arc seria millor fer uyna funcio pero de momento ho deixo aixi
-					}  //Tambe falta el cout<< You failed pero ara mateix no se on posarlo
-				}
-				else {
-					enti::cout << "you failed!";
-				}
-			}
-			else if (key == enti::InputKey::NUM2) {
-				if (CurrentPlayer[currentEntio].flechas <= 10) {
-					for (int i = 1; i < 10; i++) {
-						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - i] == NextPlayer[0].caracter) {
-							NextPlayer[0].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - i] == (NextPlayer[1].caracter)) {
-							NextPlayer[1].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - i] == (NextPlayer[2].caracter)) {
-							NextPlayer[2].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - i] == (NextPlayer[3].caracter)) {
-							NextPlayer[3].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
-							NextPlayer[4].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
-							NextPlayer[5].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
+					for (int i = 0; i <= 10; i++) {
+						for (int entios = 0; entios < NextPlayer.size(); entios++) {
+							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[entios].caracter)) {
+								hit = 1;
+								CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
+								NextPlayer[entios].vida - arco(i);
+								checkNextPlayerDie(NextPlayer);
+								break;
+							}
+							else if (i==10 || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == symbols::MONTAÑA) {
+								hit = 3;
+								break;
+							}
 						}
 					}
 				}
-				else {
-					enti::cout << "you failed!";
-				}
 			}
-			else if (key == enti::InputKey::NUM3) {
+			if (key == enti::InputKey::NUM2) {
+				CurrentPlayer[currentEntio].flechas--;
 				if (CurrentPlayer[currentEntio].flechas <= 10) {
-					for (int i = 1; i < 10; i++) {
-						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[0].caracter)) {
-							NextPlayer[0].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[1].caracter)) {
-							NextPlayer[1].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[2].caracter)) {
-							NextPlayer[2].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[3].caracter)) {
-							NextPlayer[3].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[4].caracter)) {
-							NextPlayer[4].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[5].caracter)) {
-							NextPlayer[5].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
+					for (int i = 0; i <= 10; i++) {
+						for (int entios = 0; entios < NextPlayer.size(); entios++) {
+							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - i] == (NextPlayer[entios].caracter)) {
+								hit = 1;
+								CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
+								NextPlayer[entios].vida - arco(i);
+								checkNextPlayerDie(NextPlayer);
+								break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
+							}
+							else if (i == 10 || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - i] == symbols::MONTAÑA) {
+								hit = 3;
+								break;
+							}
 						}
 					}
 				}
-				else {
-					enti::cout << "you failed!";
-				}
 			}
-			else if (key == enti::InputKey::NUM4) {
+			if (key == enti::InputKey::NUM3) {
+				CurrentPlayer[currentEntio].flechas--;
 				if (CurrentPlayer[currentEntio].flechas <= 10) {
-					for (int i = 1; i < 10; i++) {
-						if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == (NextPlayer[0].caracter)) {
-							NextPlayer[0].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == (NextPlayer[1].caracter)) {
-							NextPlayer[1].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == (NextPlayer[2].caracter)) {
-							NextPlayer[2].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == (NextPlayer[3].caracter)) {
-							NextPlayer[3].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == (NextPlayer[4].caracter)) {
-							NextPlayer[4].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
-						}
-						else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == (NextPlayer[5].caracter)) {
-							NextPlayer[5].vida - arco(i);
-							checkNextPlayerDie(NextPlayer);
-							break;
+					for (int i = 0; i <= 10; i++) {
+						for (int entios = 0; entios < NextPlayer.size(); entios++) {
+							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[entios].caracter)) {
+								hit = 1;
+								CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
+								NextPlayer[entios].vida - arco(i);
+								checkNextPlayerDie(NextPlayer);
+								break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
+							}
+							else if (i == 10 || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == symbols::MONTAÑA) {
+								hit = 3;
+								break;
+							}
 						}
 					}
 				}
-				else {
-					enti::cout << "you failed!";
+			}
+			if (key == enti::InputKey::NUM4) {
+				CurrentPlayer[currentEntio].flechas--;
+				if (CurrentPlayer[currentEntio].flechas <= 10) {
+					for (int i = 0; i <= 10; i++) {
+						for (int entios = 0; entios < NextPlayer.size(); entios++) {
+							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == (NextPlayer[entios].caracter)) {
+								hit = 1;
+								CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
+								NextPlayer[entios].vida - arco(i);
+								checkNextPlayerDie(NextPlayer);
+								break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
+							}
+							else if (i == 10 || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == symbols::MONTAÑA) {
+								hit = 3;
+								break;
+							}
+						}
+					}
 				}
 			}
-			CurrentPlayer[currentEntio].flechas--;
 		}
 		//En caso de que el jugador haya elegido la espada, se le permitirá atacar en 4 direcciones.
 		if (sword) {
