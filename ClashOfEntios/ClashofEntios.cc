@@ -207,7 +207,7 @@ void Map::drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int curre
 
 void Map::drawHUD(int acciones, int currentEntio, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer, int &hit, bool &attack, bool &sword, bool &bow) {
 	//Esta función imprimirá debajo del mapa los movimientos que le quedan al jugador, el entio que está moviendo, si ha finalizado
-	//el turno, y le informará de cómo puede atacar cuando pulse espacio. También le informará del daño que le ha ausado al entio
+	//el turno, y le informará de cómo puede atacar cuando pulse espacio. También le informará del daño que le ha causado al entio
 	//enemigo y de si lo ha matado.
 	int enemyentio = 0;
 	for (int i = 0; i < NextPlayer.size(); i++) {
@@ -419,6 +419,7 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 }
 
 int Player::arco(int casillas) {
+	//Este método devuelve el daño causado en función de la distancia.
 	switch (casillas) {
 	case 10:
 		return 1;
@@ -440,6 +441,7 @@ int Player::arco(int casillas) {
 }
 
 void Player::checkNextPlayerDie(std::vector<Entio>&NextPlayer) {
+	//Este otro método comprueba si se ha matado a algún entio, y en caso afirmativo, lo elimina del vector.
 	for (int i = 0; i < NextPlayer.size(); i++) {
 		if (NextPlayer[i].vida <= 0) {
 			CurrentMap->modificarPos(NextPlayer[i].CurrentRow, NextPlayer[i].CurrentCol, NextPlayer[i].nextPosition);
@@ -449,7 +451,6 @@ void Player::checkNextPlayerDie(std::vector<Entio>&NextPlayer) {
 }
 
 bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer) {
-	enti::cout << CurrentPlayer[currentEntio].vida << enti::endl;
 	//Primero hacemos una declaración de variables. La primera será si se ha realizado alguna acción (inicialziada en false), 
 	//y la segunda será un vector temporal que suaremos más adelante, y la tercera será el caracter del entio.
 	bool accionRealizada = false;
@@ -597,7 +598,7 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 				}
 			}
 		}
-		//Si el jugador pulsa la barra espaciadora, el ataque pasará a true.
+		//Si el jugador pulsa la barra espaciadora, el ataque pasará a true y espada y arco a false.
 		else if (key == enti::InputKey::SPACEBAR) {
 			attack = true;
 			sword = false;
@@ -618,7 +619,17 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 				attack = false;
 			}
 		}
+		//En caso de que el jugador haya elegido la arco, se le permitirá atacar en 4 direcciones.
 		if (bow) {
+			//Lo primero que hará será comprobar si tiene flechas. En caso afrimativo, se esperará a que el jugador elija una
+			//dirección de su ataque. Una vez elegida la dirección, se entrarán en dos fors anidados. El primero será para contar
+			//la distancia y el segundo contará los entios del rival. Si en 'i' posición del mapa (según la dirección del ataque)
+			//se encuentra un entio, hit pasará a ser 2 (es decir, ataque de arco), se guardará el símbolo del entio enemigo en
+			//una variable del entio actual, se le restará al entio enemigo el daño causado en función de la distancia, se guardará
+			//dicho daño en otra variable del entio actual y se comprobará si ha merto.
+			//Por otro lado, si detecta una montaña, el ataque se contará como fallido.
+			//finalmente, añadir que hay un break al final de estas dos condiciones para que se acabe el ataque y no continúe la flecha en marcha.
+			//Al final del todo, si hit no es 2, es decir, que ha fallado, hit pasará a 3, accionRealizada será true y se restará una flecha.
 			if (CurrentPlayer[currentEntio].flechas > 0) {
 				if (key == enti::InputKey::NUM1) {
 					for (int i = 3; i <= 10; i++) {
@@ -628,6 +639,7 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 								CurrentPlayer[currentEntio].villain = NextPlayer[entios].caracter;
 								NextPlayer[entios].vida -= arco(i);
 								CurrentPlayer[currentEntio].damageInflicted = arco(i);
+								checkNextPlayerDie(NextPlayer);
 								break;
 							}
 							else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == symbols::MONTAÑA) {
