@@ -11,7 +11,9 @@ std::vector<Entio>EntioPA;
 std::vector<Entio>EntioPB;
 std::vector<Entio>CurrentPlayer;
 std::vector<Entio>NextPlayer;
+enti::InputKey tecla;
 bool game = false;
+
 //Función que cambia de jugador en el bucle del juego.
 void swapPlayer(std::vector<Entio>&Player1, std::vector<Entio>&Player2) {
 	std::vector<Entio>aux = Player1;
@@ -34,7 +36,7 @@ void ordenarPorFatiga(std::vector<Entio>&Entios) {
 }
 
 //Función del menú principal del juego. Gracias a enti::systempause, el juego no comenzará hasta que el jugador pulse alguna tecla.
-void mainmenu(const enti::InputKey & key) {
+void mainmenu() {
 	enti::cout << enti::Color::YELLOW << "CLASH OF ENTIOS" << enti::endl << enti::endl;
 
 	enti::cout << enti::Color::WHITE << "- Each player has 6 entios." << enti::endl;
@@ -68,13 +70,22 @@ void vaciarStack(std::vector<Entio>&Entios) {
 }
 
 int main() {
-	enti::InputKey tecla;
-	mainmenu(tecla);
+	//Primero viene el menú principal, que aparecerá en pantalla hasta que el jugador pulse alguna tecla.
+	mainmenu();
 
+	//Una vez el jugador ha pulsado una tecla, se leerá el mapa, se llamará al constructor de la clase player y se le asignará
+	//a los vectores CurrentPlayer y NextPlayer los vectores correspondientes.
 	map.ReadMap(file, "default.cfg");
 	Player player(&map, EntioPA, EntioPB);
 	CurrentPlayer = EntioPA;
 	NextPlayer = EntioPB;
+
+	//Mientras el juego esté en marcha, se le irá pidiendo al jugador que pulse una tecla. Si el movimiento del player devuelve true,
+	//significará que su turno ha acabado. Un ese caso, se vaciará el stack de los movimientos que han realizado los entios para que
+	//en el turno siguiente no pueda pulsar z desde el principio. También se ordenarán los entios en función de su fatiga para que al
+	//cambiar de jugador empieces con el entio con menor fatiga. Una vez hayan acabado los preparativos, se cambiarán los vectores
+	//de los entios, se pondrá el booleano del jugador 1 a false (o true si ha acabado el turno del jugador 2) y se empezará a jugar
+	//con el entio de la posición 0.
 	while (game) {
 		if (player.PlayerMovement(tecla, CurrentPlayer, NextPlayer)) {
 			vaciarStack(CurrentPlayer);
@@ -83,14 +94,17 @@ int main() {
 			player.player1torn = !player.player1torn;
 			player.currentEntio = 0;
 		}
+		//Además, se imprimirá continuamente el mapa así como el hud, y se esperará a que el jugador pulse una tecla.
 		map.drawMap(player.player1torn, CurrentPlayer, player.currentEntio);
 		map.drawHUD(player.acciones, player.currentEntio, CurrentPlayer, NextPlayer, player.hit, player.attack, player.sword, player.bow);
 		tecla = enti::getInputKey();
+		//Finalmente, se comprobará si alguno de los vectores está vacío, y cuando el jugador pulse alguna tecla, terminará el juego.
 		if (CurrentPlayer.size() == 0 || NextPlayer.size() == 0) {
 			game = false;
 			enti::systemPause();
 			return 0;
 		}
+		//También podrá finalizar el juego si el jugador pulsa esc.
 		if (tecla == enti::InputKey::ESC) {
 			return 0;
 		}

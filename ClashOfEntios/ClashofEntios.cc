@@ -207,7 +207,8 @@ void Map::drawMap(bool _player1Torn, std::vector<Entio>&CurrentPlayer, int curre
 
 void Map::drawHUD(int acciones, int currentEntio, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer, int &hit, bool &attack, bool &sword, bool &bow) {
 	//Esta función imprimirá debajo del mapa los movimientos que le quedan al jugador, el entio que está moviendo, si ha finalizado
-	//el turno, y le informará de cómo peude atacar cuando pulse espacio.
+	//el turno, y le informará de cómo puede atacar cuando pulse espacio. También le informará del daño que le ha ausado al entio
+	//enemigo y de si lo ha matado.
 	enti::cout << enti::endl;
 	enti::cout << enti::Color::YELLOW << "Remaining movements: " << enti::Color::LIGHTCYAN << acciones << enti::endl;
 	enti::cout << enti::Color::YELLOW << "Now moves character  " << enti::Color::LIGHTCYAN << static_cast<char>(CurrentPlayer[currentEntio].caracter) << enti::endl << enti::endl;
@@ -255,6 +256,10 @@ symbols Map::guardarCaracter(int & _row, int & _column) {
 
 Map::~Map() {
 	//Destructor de la clase map.
+	for (int i = 0; i < dimensiones.filas; i++) {
+		delete[] this->infoMap[i];
+	}
+	delete[] this->infoMap;
 }
 
 
@@ -444,16 +449,11 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 	symbols CheckEntio;
 
 	//La primera condición será para pintar la posición anterior a la que se encontraba el jugador. Por eso solo tendremos en cuenta el movimiento,
-	//y no si ha pulsado enter y la barra esoaciadora.
+	//y no si ha pulsado enter y la barra espaciadora.
 	if (key != enti::InputKey::ENTER && key != enti::InputKey::SPACEBAR) {
-		//Si la posición actual del jugador es la inicial, puede significar que no se ha movido, y por eso, una vez se haya movido, pintaremos tierra.
-		if (CurrentPlayer[currentEntio].CurrentRow == CurrentPlayer[currentEntio].originRow && CurrentPlayer[currentEntio].CurrentCol == CurrentPlayer[currentEntio].originCol) {
-			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, symbols::TIERRA);
-		}
-		//Si no, pintaremos el símbolo guardado en unas condiciones de más adelante.
-		else {
-			CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].nextPosition);
-		}
+		//Cuando se haya movido, pintaremos detras de él lo que había guardado en aquella posición. En el primer movimiento pintaremos tierra, y después
+		//lo que hubiera en aquella posición.
+		CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].nextPosition);
 	}
 
 	//Ahora comprobaremos si el jugador ha realizado alguna acción.
@@ -593,6 +593,9 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 		else if (key == enti::InputKey::SPACEBAR) {
 			attack = true;
 		}
+		//Si el ataque es true, le daremos a elegir entre espada y arco. Una vez elija una de las dos, el ataque
+		//pasará a flase y la key a none, dado que si la dejáramos como estaba, realizaría instantáneamente un
+		//ataque en el sentido y dirección al que correspondan los números 1 o 2. 
 		if (attack) {
 			if (key == enti::InputKey::NUM1) {
 				key = enti::InputKey::NONE;
@@ -764,7 +767,12 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 			}
 			CurrentPlayer[currentEntio].flechas--;
 		}
+		//En caso de que el jugador haya elegido la espada, se le permitirá atacar en 4 direcciones.
 		if (sword) {
+			//Una vez ha elegido una, se comprobará si en esa posición hay un entio. En caso afirmativo, hit pasará a ser 1, es decir,
+			//que ha asestado un golpe con la espada, se eliminará del vector de entios enemigos el entio al que se le ha atacado y se
+			//pintará en su posición actual lo que tiene guardado (bosque o tierra).
+			//En caso de qe no haya ningún entio, hit pasará a 3, es decir, que ha fallado.
 			if (key == enti::InputKey::NUM1) {
 				accionRealizada = true;
 				for (int i = 0; i < NextPlayer.size(); i++) {
@@ -827,14 +835,19 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 			}
 		}
 	}
-
+	//Cada vez que el jugador realice una acción, el booleano accionRealizada pasará a true. Si accionRealizada es true, se le descontará
+	//una acción al jugador actual.
 	if (accionRealizada) {
 		acciones--;
 	}
 
+	//Al final, antes del return, se pintará en la posición deseada al entio actual en caso de que se haya movido.
 	CurrentMap->modificarPos(CurrentPlayer[currentEntio].CurrentRow, CurrentPlayer[currentEntio].CurrentCol, CurrentPlayer[currentEntio].caracter);
 
+	//Si el jugador se ha quedado sin acciones y pulsa enter, su turno acabará y devolverá true, lo cual producirá que se cambie de turno.
+	//Si no, devolverá false.
 	if (acciones == 0 && key == enti::InputKey::ENTER) {
+		hit = 0;
 		attack = false;
 		sword = false;
 		bow = false;

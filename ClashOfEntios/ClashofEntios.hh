@@ -28,7 +28,7 @@ enum class symbols :char {
 //struct de los entios
 struct Entio {
 	symbols caracter;
-	symbols nextPosition;
+	symbols nextPosition = symbols::TIERRA;
 	int CurrentRow;
 	int CurrentCol;
 	int originRow;
