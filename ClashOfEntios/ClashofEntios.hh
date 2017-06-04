@@ -33,6 +33,7 @@ struct Entio {
 	int CurrentCol;
 	int originRow;
 	int originCol;
+	int damageInflicted;
 	int vida = 10;
 	int fatiga = 0;
 	int flechas = 10;
@@ -56,6 +57,7 @@ private:
 	//Atributos de la clase
 	vector dimensiones;
 	symbols**infoMap;
+	Player * player;
 };
 
 
@@ -64,9 +66,8 @@ class Player {
 public:
 	//Métodos
 	Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<Entio>&EntiosPlayerB);//constructor de la clase player.
-	bool PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer);//método que permite al jugador moverse, así como cambiar
-	//de entio y de jugador (en función de lo que devuelva el método).
-	vector getPos();
+	bool PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlayer, std::vector<Entio>&NextPlayer);//método que permite al jugador moverse, 
+	//así como cambiar de entio y de jugador (en función de lo que devuelva el método).
 	//Atributos
 	int acciones = 10;
 	int currentEntio = 0;

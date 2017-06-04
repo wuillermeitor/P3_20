@@ -209,6 +209,12 @@ void Map::drawHUD(int acciones, int currentEntio, std::vector<Entio>&CurrentPlay
 	//Esta función imprimirá debajo del mapa los movimientos que le quedan al jugador, el entio que está moviendo, si ha finalizado
 	//el turno, y le informará de cómo puede atacar cuando pulse espacio. También le informará del daño que le ha ausado al entio
 	//enemigo y de si lo ha matado.
+	int enemyentio = 0;
+	for (int i = 0; i < NextPlayer.size(); i++) {
+		if (NextPlayer[i].caracter == CurrentPlayer[currentEntio].villain) {
+			enemyentio = i;
+		}
+	}
 	enti::cout << enti::endl;
 	enti::cout << enti::Color::YELLOW << "Remaining movements: " << enti::Color::LIGHTCYAN << acciones << enti::endl;
 	enti::cout << enti::Color::YELLOW << "Now moves character  " << enti::Color::LIGHTCYAN << static_cast<char>(CurrentPlayer[currentEntio].caracter) << enti::endl << enti::endl;
@@ -219,10 +225,20 @@ void Map::drawHUD(int acciones, int currentEntio, std::vector<Entio>&CurrentPlay
 	if (attack) {
 		enti::cout << enti::Color::WHITE << "Enter the weapon you want to choose:" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "1 - SWORD" << enti::endl;
-		enti::cout << enti::Color::YELLOW << "2 - BOW" << enti::endl;
+		enti::cout << enti::Color::YELLOW << "2 - BOW";
+		if (CurrentPlayer[currentEntio].flechas == 0) {
+			enti::cout << enti::Color::LIGHTRED << " (You have no more arrows left)" << enti::endl;
+		}
 	}
 
-	if (sword || bow) {
+	if (sword) {
+		enti::cout << enti::Color::WHITE << "Enter the direction to attack:" << enti::endl;
+		enti::cout << enti::Color::YELLOW << "1 - UP" << enti::endl;
+		enti::cout << enti::Color::YELLOW << "2 - LEFT" << enti::endl;
+		enti::cout << enti::Color::YELLOW << "3 - DOWN" << enti::endl;
+		enti::cout << enti::Color::YELLOW << "4 - RIGHT" << enti::endl;
+	}
+	if (bow && CurrentPlayer[currentEntio].flechas > 0) {
 		enti::cout << enti::Color::WHITE << "Enter the direction to attack:" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "1 - UP" << enti::endl;
 		enti::cout << enti::Color::YELLOW << "2 - LEFT" << enti::endl;
@@ -234,6 +250,12 @@ void Map::drawHUD(int acciones, int currentEntio, std::vector<Entio>&CurrentPlay
 		enti::cout << enti::Color::WHITE << "You inflicted 10 damage to entio " << static_cast<char>(CurrentPlayer[currentEntio].villain) << enti::endl;
 		enti::cout << enti::Color::LIGHTMAGENTA << "Entio " << static_cast<char>(CurrentPlayer[currentEntio].villain) << " killed!" << enti::endl;
 		sword = false;
+	}
+	else if (hit == 2) {
+		enti::cout << enti::Color::WHITE << "You inflicted " << CurrentPlayer[currentEntio].damageInflicted << " damage to entio " << static_cast<char>(NextPlayer[enemyentio].caracter) << enti::endl;
+		if (NextPlayer[enemyentio].vida <= 0) {
+			enti::cout << enti::Color::LIGHTMAGENTA << "Entio " << static_cast<char>(CurrentPlayer[currentEntio].villain) << " killed!" << enti::endl;
+		}
 		bow = false;
 	}
 	else if (hit == 3) {
@@ -602,10 +624,10 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 					for (int i = 3; i <= 10; i++) {
 						for (int entios = 0; entios < NextPlayer.size(); entios++) {
 							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[entios].caracter)) {
-								hit = 1;
-								CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
-								NextPlayer[entios].vida - arco(i);
-								checkNextPlayerDie(NextPlayer);
+								hit = 2;
+								CurrentPlayer[currentEntio].villain = NextPlayer[entios].caracter;
+								NextPlayer[entios].vida -= arco(i);
+								CurrentPlayer[currentEntio].damageInflicted = arco(i);
 								break;
 							}
 							else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == symbols::MONTAÑA) {
@@ -614,20 +636,22 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 							}
 						}
 					}
-					if (hit != 1) {
+					if (hit != 2) {
 						hit = 3;
 					}
+					accionRealizada = true;
 					CurrentPlayer[currentEntio].flechas--;
 				}
 				if (key == enti::InputKey::NUM2) {
 					for (int i = 3; i <= 10; i++) {
 						for (int entios = 0; entios < NextPlayer.size(); entios++) {
 							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - i] == (NextPlayer[entios].caracter)) {
-								hit = 1;
-								CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
-								NextPlayer[entios].vida - arco(i);
+								hit = 2;
+								CurrentPlayer[currentEntio].villain = NextPlayer[entios].caracter;
+								NextPlayer[entios].vida -= arco(i);
+								CurrentPlayer[currentEntio].damageInflicted = arco(i);
 								checkNextPlayerDie(NextPlayer);
-								break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
+								break;
 							}
 							else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - i] == symbols::MONTAÑA) {
 								hit = 3;
@@ -635,20 +659,22 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 							}
 						}
 					}
-					if (hit != 1) {
+					if (hit != 2) {
 						hit = 3;
 					}
+					accionRealizada = true;
 					CurrentPlayer[currentEntio].flechas--;
 				}
 				if (key == enti::InputKey::NUM3) {
 					for (int i = 3; i <= 10; i++) {
 						for (int entios = 0; entios < NextPlayer.size(); entios++) {
 							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[entios].caracter)) {
-								hit = 1;
-								CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
-								NextPlayer[entios].vida - arco(i);
+								hit = 2;
+								CurrentPlayer[currentEntio].villain = NextPlayer[entios].caracter;
+								NextPlayer[entios].vida -= arco(i);
+								CurrentPlayer[currentEntio].damageInflicted = arco(i);
 								checkNextPlayerDie(NextPlayer);
-								break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
+								break;
 							}
 							else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == symbols::MONTAÑA) {
 								hit = 3;
@@ -656,20 +682,22 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 							}
 						}
 					}
-					if (hit != 1) {
+					if (hit != 2) {
 						hit = 3;
 					}
+					accionRealizada = true;
 					CurrentPlayer[currentEntio].flechas--;
 				}
 				if (key == enti::InputKey::NUM4) {
 					for (int i = 3; i <= 10; i++) {
 						for (int entios = 0; entios < NextPlayer.size(); entios++) {
 							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == (NextPlayer[entios].caracter)) {
-								hit = 1;
-								CurrentPlayer[currentEntio].villain = NextPlayer[i].caracter;
-								NextPlayer[entios].vida - arco(i);
+								hit = 2;
+								CurrentPlayer[currentEntio].villain = NextPlayer[entios].caracter;
+								NextPlayer[entios].vida -= arco(i);
+								CurrentPlayer[currentEntio].damageInflicted = arco(i);
 								checkNextPlayerDie(NextPlayer);
-								break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
+								break;
 							}
 							else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == symbols::MONTAÑA) {
 								hit = 3;
@@ -677,9 +705,10 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 							}
 						}
 					}
-					if (hit != 1) {
+					if (hit != 2) {
 						hit = 3;
 					}
+					accionRealizada = true;
 					CurrentPlayer[currentEntio].flechas--;
 				}
 			}
