@@ -399,37 +399,22 @@ Player::Player(Map * pCurrentMap, std::vector<Entio>&EntiosPlayerA, std::vector<
 int Player::arco(int casillas) {
 	switch (casillas) {
 	case 10:
-		vidaquitada = 1;
-		break;
+		return 1;
 	case 9:
-		vidaquitada = 2;
-		break;
+		return 2;
 	case 8:
-		vidaquitada = 3;
-		break;
+		return 3;
 	case 7:
-		vidaquitada = 4;
-		break;
+		return 4;
 	case 6:
-		vidaquitada = 5;
-		break;
+		return 5;
 	case 5:
-		vidaquitada = 6;
-		break;
+		return 6;
 	case 4:
-		vidaquitada = 7;
-		break;
+		return 7;
 	case 3:
-		vidaquitada = 8;
-		break;
-	case 2:
-		vidaquitada = 9;
-		break;
-	case 1:
-		vidaquitada = 10;
-		break;
+		return 8;
 	}
-	return vidaquitada;
 }
 
 void Player::checkNextPlayerDie(std::vector<Entio>&NextPlayer) {
@@ -593,6 +578,8 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 		//Si el jugador pulsa la barra espaciadora, el ataque pasará a true.
 		else if (key == enti::InputKey::SPACEBAR) {
 			attack = true;
+			sword = false;
+			bow = false;
 		}
 		//Si el ataque es true, le daremos a elegir entre espada y arco. Una vez elija una de las dos, el ataque
 		//pasará a flase y la key a none, dado que si la dejáramos como estaba, realizaría instantáneamente un
@@ -610,10 +597,9 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 			}
 		}
 		if (bow) {
-			if (key == enti::InputKey::NUM1) {
-				CurrentPlayer[currentEntio].flechas--;
-				if (CurrentPlayer[currentEntio].flechas <= 10) {
-					for (int i = 0; i <= 10; i++) {
+			if (CurrentPlayer[currentEntio].flechas > 0) {
+				if (key == enti::InputKey::NUM1) {
+					for (int i = 3; i <= 10; i++) {
 						for (int entios = 0; entios < NextPlayer.size(); entios++) {
 							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[entios].caracter)) {
 								hit = 1;
@@ -622,18 +608,19 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 								checkNextPlayerDie(NextPlayer);
 								break;
 							}
-							else if (i==10 || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == symbols::MONTAÑA) {
+							else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow - i][CurrentPlayer[currentEntio].CurrentCol] == symbols::MONTAÑA) {
 								hit = 3;
 								break;
 							}
 						}
 					}
+					if (hit != 1) {
+						hit = 3;
+					}
+					CurrentPlayer[currentEntio].flechas--;
 				}
-			}
-			if (key == enti::InputKey::NUM2) {
-				CurrentPlayer[currentEntio].flechas--;
-				if (CurrentPlayer[currentEntio].flechas <= 10) {
-					for (int i = 0; i <= 10; i++) {
+				if (key == enti::InputKey::NUM2) {
+					for (int i = 3; i <= 10; i++) {
 						for (int entios = 0; entios < NextPlayer.size(); entios++) {
 							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - i] == (NextPlayer[entios].caracter)) {
 								hit = 1;
@@ -642,18 +629,19 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 								checkNextPlayerDie(NextPlayer);
 								break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
 							}
-							else if (i == 10 || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - i] == symbols::MONTAÑA) {
+							else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol - i] == symbols::MONTAÑA) {
 								hit = 3;
 								break;
 							}
 						}
 					}
+					if (hit != 1) {
+						hit = 3;
+					}
+					CurrentPlayer[currentEntio].flechas--;
 				}
-			}
-			if (key == enti::InputKey::NUM3) {
-				CurrentPlayer[currentEntio].flechas--;
-				if (CurrentPlayer[currentEntio].flechas <= 10) {
-					for (int i = 0; i <= 10; i++) {
+				if (key == enti::InputKey::NUM3) {
+					for (int i = 3; i <= 10; i++) {
 						for (int entios = 0; entios < NextPlayer.size(); entios++) {
 							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == (NextPlayer[entios].caracter)) {
 								hit = 1;
@@ -662,18 +650,19 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 								checkNextPlayerDie(NextPlayer);
 								break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
 							}
-							else if (i == 10 || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == symbols::MONTAÑA) {
+							else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow + i][CurrentPlayer[currentEntio].CurrentCol] == symbols::MONTAÑA) {
 								hit = 3;
 								break;
 							}
 						}
 					}
+					if (hit != 1) {
+						hit = 3;
+					}
+					CurrentPlayer[currentEntio].flechas--;
 				}
-			}
-			if (key == enti::InputKey::NUM4) {
-				CurrentPlayer[currentEntio].flechas--;
-				if (CurrentPlayer[currentEntio].flechas <= 10) {
-					for (int i = 0; i <= 10; i++) {
+				if (key == enti::InputKey::NUM4) {
+					for (int i = 3; i <= 10; i++) {
 						for (int entios = 0; entios < NextPlayer.size(); entios++) {
 							if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == (NextPlayer[entios].caracter)) {
 								hit = 1;
@@ -682,12 +671,16 @@ bool Player::PlayerMovement(enti::InputKey & key, std::vector<Entio>&CurrentPlay
 								checkNextPlayerDie(NextPlayer);
 								break; // Para que no mate a todos los enemigos que haya en la linea de 10 casillas a lo metralleta
 							}
-							else if (i == 10 || CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == symbols::MONTAÑA) {
+							else if (CurrentMap->infoMap[CurrentPlayer[currentEntio].CurrentRow][CurrentPlayer[currentEntio].CurrentCol + i] == symbols::MONTAÑA) {
 								hit = 3;
 								break;
 							}
 						}
 					}
+					if (hit != 1) {
+						hit = 3;
+					}
+					CurrentPlayer[currentEntio].flechas--;
 				}
 			}
 		}
